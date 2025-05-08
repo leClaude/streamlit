@@ -2,7 +2,7 @@ streamlit
 numpy
 pandas
 matplotlib
-scypi
+scipy
 bokeh
 plotly
 seaborn
