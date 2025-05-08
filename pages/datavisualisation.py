@@ -156,3 +156,5 @@ def show():
 
      # Affichage des graphiques dans Streamlit
     st.pyplot(fig_distribution)
+
+show()
