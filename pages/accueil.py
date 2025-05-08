@@ -1,6 +1,6 @@
 # Accueil
-
 import streamlit as st
+
 st.title("Projet Emission de CO2")
 
 st.markdown(""" 
