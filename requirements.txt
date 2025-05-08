@@ -4,3 +4,4 @@ pandas
 matplotlib
 plotly
 seaborn
+streamlit-extras
