@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_extras import switch_page as sp
+import streamlit_extras.switch_page as sp
 
 
 # Rediriger vers la page d'accueil au lancement
