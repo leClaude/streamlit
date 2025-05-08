@@ -1,0 +1,1 @@
+streamlit run co2_app.py
