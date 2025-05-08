@@ -99,7 +99,7 @@ st.title("Projet Emission de CO2")
 #page = st.sidebar.selectbox(
 #    "Navigation",
 #    ["Accueil","Exploration", "Data Visualisation", "Modelisation"]
-)
+#)
 
 # Page Accueil (Introduction)
 #if page == "Accueil":
