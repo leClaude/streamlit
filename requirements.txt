@@ -1,10 +1,6 @@
 streamlit
 numpy
 pandas
-matplotlib==3.8.0
-scipy
-bokeh
+matplotlib
 plotly
 seaborn
-Addcopyfighandler
-dataviz
