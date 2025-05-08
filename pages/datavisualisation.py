@@ -24,7 +24,7 @@ def generate_boxplot(df_plot):
 # Fonction pour générer l'histogramme
 @st.cache_data
 def generate_histogram(df_fr, df_eu):
-    fig, axes = plt.subplots(1, 2, figsize=(18, 5))
+    fig, axes = plt.subplots(1, 1, figsize=(18, 5))
 
     # Histogramme pour Europe 2014
     sns.histplot(df_eu['e (g/km)'], ax=axes[0], bins=30, kde=False, color="#21918c", alpha=0.6, label="Europe 2014")
@@ -43,7 +43,7 @@ def generate_histogram(df_fr, df_eu):
 # Fonction pour générer le graphique KDE (densité)
 @st.cache_data
 def generate_kde_plot(df_fr, df_eu):
-    fig, axes = plt.subplots(1, 2, figsize=(18, 5))
+    fig, axes = plt.subplots(1, 1, figsize=(18, 5))
 
     # KDE pour Europe 2014
     sns.kdeplot(df_eu['e (g/km)'], ax=axes[1], fill=True, alpha=0.5, color="#21918c", label="Europe 2014")
