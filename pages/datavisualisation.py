@@ -43,7 +43,7 @@ def generate_histogram(df_fr, df_eu):
 # Fonction pour générer le graphique KDE (densité)
 @st.cache_data
 def generate_kde_plot(df_fr, df_eu):
-    fig, axes = plt.subplots(figsize=(18, 5))
+    fig, axes = plt.subplots(1,1,figsize=(18, 5))
 
     # KDE pour Europe 2014
     sns.kdeplot(df_eu['e (g/km)'], ax=axes[1], fill=True, alpha=0.5, color="#21918c", label="Europe 2014")
@@ -59,7 +59,7 @@ def generate_kde_plot(df_fr, df_eu):
     return fig
 
 def generate_distribution_plots(df_fr):
-    fig, axes = plt.subplots(figsize=(15, 15))
+    fig, axes = plt.subplots(1,1,figsize=(15, 15))
     plt.subplots_adjust(wspace=1)
 
     # Répartition des constructeurs dans le dataset ADEME
