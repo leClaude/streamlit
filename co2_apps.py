@@ -2,9 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
-#import modelisation
-#from modelisation import show  
+import seaborn as sns 
 
 # Chargement des données avec cache
 @st.cache_data
@@ -95,16 +93,16 @@ df_eu_clean = preprocess_eu(df_europe)
 
 st.title("Projet Emission de CO2")
 
-st.sidebar.title('Sommaire')
+#st.sidebar.title('Sommaire')
 
 # Barre de navigation
-page = st.sidebar.selectbox(
-    "Navigation",
-    ["Accueil","Exploration", "Data Visualisation", "Modélisation"]
+#page = st.sidebar.selectbox(
+#    "Navigation",
+#    ["Accueil","Exploration", "Data Visualisation", "Modelisation"]
 )
 
 # Page Accueil (Introduction)
-if page == "Accueil":
+#if page == "Accueil":
     st.markdown(""" 
     ### Introduction
 
@@ -131,9 +129,9 @@ if page == "Accueil":
 #    exploration.show()
 
 # Page Data Visualisation
-elif page == "Data Visualisation":
-    import dataviz
-    dataviz.show()
+#elif page == "Data Visualisation":
+#    import dataviz
+#    dataviz.show()
 
 # Page Modélisation
 #elif page == "Modélisation":
