@@ -91,7 +91,7 @@ df_fr_clean = preprocess_fr(df_france)
 df_eu_clean = preprocess_eu(df_europe)
 
 # Envoi des données nettoyées à la fonction d'affichage
-modelisation.show(df_fr_clean, df_eu_clean)
+#modelisation.show(df_fr_clean, df_eu_clean)
 
 st.title("Projet Emission de CO2")
 
