@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import modelisation
-from modelisation import show  
+#import modelisation
+#from modelisation import show  
 
 # Chargement des données avec cache
 @st.cache_data
@@ -136,6 +136,6 @@ elif page == "Data Visualisation":
     dataviz.show()
 
 # Page Modélisation
-elif page == "Modélisation":
-    import modelisation
-    modelisation.show(df_fr_clean, df_eu_clean)
+#elif page == "Modélisation":
+#    import modelisation
+#    modelisation.show(df_fr_clean, df_eu_clean)
