@@ -1,7 +1,7 @@
 streamlit
 numpy
 pandas
-matplotlib
+matplotlib==3.8.0
 scipy
 bokeh
 plotly
