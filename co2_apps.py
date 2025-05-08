@@ -1,6 +1,6 @@
 import streamlit as st
-from streamlit_extras.switch_page_button import switch_page
+from streamlit_extras import switch_page as sp
 
 
 # Rediriger vers la page d'accueil au lancement
-switch_page("accueil")
+sp.switch_page("pages/accueil.py")
