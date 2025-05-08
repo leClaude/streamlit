@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-#import modelisation
-#from modelisation import show  
+import modelisation
+from modelisation import show  
 
 # Chargement des données avec cache
 @st.cache_data
@@ -126,9 +126,9 @@ if page == "Accueil":
     """)
 
 # Page Exploration
-if page == "Exploration":
-    import exploration as exploration
-    exploration.show()
+#if page == "Exploration":
+#    import exploration as exploration
+#    exploration.show()
 
 # Page Data Visualisation
 elif page == "Data Visualisation":

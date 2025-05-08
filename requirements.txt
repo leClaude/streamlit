@@ -2,7 +2,10 @@ streamlit
 numpy
 pandas
 matplotlib
+scypi
+bokeh
 plotly
-exploration
-dataviz
 seaborn
+Addcopyfighandler
+dataviz
+modelisation
