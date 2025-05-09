@@ -55,7 +55,7 @@ def load_data():
 # Fonction pour générer le boxplot
 @st.cache_data
 def generate_boxplot(df_plot):
-    fig = px.box(df_plot, x='Dataset', y='C02', color='Dataset',
+    fig = px.box(df_plot, x='Dataset', y='Co2 (g/km)', color='Dataset',
                  points='outliers',  # Limiter les points à afficher aux valeurs aberrantes
                  labels={'CO2': 'Émissions de CO2 (g/km)'},
                  title='Distribution interactive des émissions de CO2')
