@@ -94,7 +94,7 @@ def generate_heatmap(ademe_2014):
 
 
 def generate_distribution_plots(df_fr):
-    fig, axes = plt.subplots(1,1,figsize=(15, 15))
+    fig, axes = plt.subplots(1,2,figsize=(15, 15))
     plt.subplots_adjust(wspace=1)
 
     # Répartition des constructeurs dans le dataset ADEME
@@ -162,9 +162,19 @@ def show():
                 L'histogramme ci-dessus illustre la répartition des émissions de CO2 dans les deux jeux de données : Ademe 2014 (en jaune) et Europe 2014 (en bleu-vert). On observe que, de manière générale, les émissions sont plus élevées dans le jeu de données de l'Ademe, avec un pic autour de 200 g/km. Les véhicules de cette base de données semblent ainsi être, en moyenne, plus polluants que ceux présents dans la base Europe 2014.
                 """)
     
+    st.subheader("Matrice de correlation du dataset ADEME")
+    #Générer la heatmap
+    fig_heatmap = generate_heatmap(df_fr)
     
-    st.subheader("Répartition des entrées par constructeur et carrosserie")
+    #Affichage de la heatmap
+    st.pyplot(fig_heatmap)
+    
+    st.subheader("Répartition des entrées par constructeur et carrosserie du dataset ADEME")
+    # Générer les graphiques de répartition
+    fig_distribution = generate_distribution_plots(df_fr)
 
+     # Affichage des graphiques dans Streamlit
+    st.pyplot(fig_distribution)
     st.markdown("""
                 - Répartition des constructeurs
                 Lorsque l'on regarde les constructeurs présents dans le jeu de données de l'Ademe, on remarque une très forte représentation des véhicules Mercedes (65.8%) ainsi que Volkswagen(24.9%). Les autres constructeurs sont regroupés dans la catégorie “Autres” et ne représentent que 9,3%.
@@ -175,17 +185,8 @@ def show():
 
                 """)
                 
-    st.subheader("Matrice de correlation du dataset ADEME")
-    #Générer la heatmap
-    fig_heatmap = generate_heatmap(df_fr)
     
-    #Affichage de la heatmap
-    st.pyplot(fig_heatmap)
     
-    # Générer les graphiques de répartition
-    fig_distribution = generate_distribution_plots(df_fr)
-
-     # Affichage des graphiques dans Streamlit
-    st.pyplot(fig_distribution)
+    
 
 show()
