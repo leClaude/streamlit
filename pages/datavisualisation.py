@@ -129,16 +129,14 @@ def show():
     df_fr, df_eu = load_data()
 
     # Préparation des données pour la comparaison
-    df_fr_plot = df_fr[['co2']].copy()
-    df_fr_plot = df_fr_plot.rename(columns={'co2': 'CO2'})
+    df_fr_plot = df_fr[['Co2 (g/km)']].copy()
     df_fr_plot['Dataset'] = 'France'
 
-    df_eu_plot = df_eu[['e (g/km)']].copy()
-    df_eu_plot = df_eu_plot.rename(columns={'e (g/km)': 'CO2'})
+    df_eu_plot = df_eu[['Co2 (g/km)']].copy()
     df_eu_plot['Dataset'] = 'Europe'
 
     df_plot = pd.concat([df_fr_plot, df_eu_plot], ignore_index=True)
-    df_plot = df_plot.dropna(subset=['CO2'])
+    df_plot = df_plot.dropna(subset=['Co2 (g/km)'])
 
     # Générer le boxplot en utilisant la fonction mise en cache
     fig_boxplot = generate_boxplot(df_plot)
