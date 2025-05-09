@@ -68,10 +68,10 @@ def generate_histogram(df_fr, df_eu):
     fig = figsize=(18, 5)
 
     # Histogramme pour Europe 2014
-    sns.histplot(df_eu['Co2 (g/km)'], ax=axes[0], bins=30, kde=False, color="#21918c", alpha=0.6, label="Europe 2014")
+    sns.histplot(df_eu['Co2 (g/km)'], bins=30, kde=False, color="#21918c", alpha=0.6, label="Europe 2014")
     
     # Histogramme pour ADEME 2014
-    sns.histplot(df_fr['Co2 (g/km)'], ax=axes[0], bins=30, kde=False, color="#fde725", alpha=0.6, label="Ademe 2014")
+    sns.histplot(df_fr['Co2 (g/km)'], bins=30, kde=False, color="#fde725", alpha=0.6, label="Ademe 2014")
     
     # Titre et labels
     #axes[0].set_title("Histogramme des émissions de CO2")
