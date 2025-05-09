@@ -55,7 +55,7 @@ def load_data():
 # Fonction pour générer le boxplot
 @st.cache_data
 def generate_boxplot(df_plot):
-    fig = px.box(df_plot, x='Dataset', y='CO2', color='Dataset',
+    fig = px.box(df_plot, x='Dataset', y='C02', color='Dataset',
                  points='outliers',  # Limiter les points à afficher aux valeurs aberrantes
                  labels={'CO2': 'Émissions de CO2 (g/km)'},
                  title='Distribution interactive des émissions de CO2')
@@ -65,19 +65,19 @@ def generate_boxplot(df_plot):
 # Fonction pour générer l'histogramme
 @st.cache_data
 def generate_histogram(df_fr, df_eu):
-    fig, axes = plt.subplots(1, 2, figsize=(18, 5))
+    fig = plt.subplots = (figsize=(18, 5))
 
     # Histogramme pour Europe 2014
-    sns.histplot(df_eu['e (g/km)'], ax=axes[0], bins=30, kde=False, color="#21918c", alpha=0.6, label="Europe 2014")
+    sns.histplot(df_eu['Co2 (g/km)'], ax=axes[0], bins=30, kde=False, color="#21918c", alpha=0.6, label="Europe 2014")
     
     # Histogramme pour ADEME 2014
-    sns.histplot(df_fr['co2'], ax=axes[0], bins=30, kde=False, color="#fde725", alpha=0.6, label="Ademe 2014")
+    sns.histplot(df_fr['Co2 (g/km)'], ax=axes[0], bins=30, kde=False, color="#fde725", alpha=0.6, label="Ademe 2014")
     
     # Titre et labels
-    axes[0].set_title("Histogramme des émissions de CO2")
-    axes[0].set_xlabel("Émissions de CO2 (g/km)")
-    axes[0].set_ylabel("Nombre de véhicules")
-    axes[0].legend()
+    #axes[0].set_title("Histogramme des émissions de CO2")
+    #axes[0].set_xlabel("Émissions de CO2 (g/km)")
+    #axes[0].set_ylabel("Nombre de véhicules")
+    #axes[0].legend()
 
     return fig
 
@@ -92,23 +92,6 @@ def generate_heatmap(ademe_2014):
     plt.title('Matrice de corrélation ADEME 2014')
     return fig
 
-# Fonction pour générer le graphique KDE (densité)
-@st.cache_data
-def generate_kde_plot(df_fr, df_eu):
-    fig, axes = plt.subplots(1,2,figsize=(18, 5))
-
-    # KDE pour Europe 2014
-    sns.kdeplot(df_eu['e (g/km)'], ax=axes[1], fill=True, alpha=0.5, color="#21918c", label="Europe 2014")
-    
-    # KDE pour ADEME 2014
-    sns.kdeplot(df_fr['co2'], ax=axes[1], fill=True, alpha=0.5, color="#fde725", label="ADEME 2014")
-    
-    # Titre et labels
-    axes[1].set_title("Densité des émissions de CO2 (KDE)")
-    axes[1].set_xlabel("Émissions de CO2 (g/km)")
-    axes[1].legend()
-
-    return fig
 
 def generate_distribution_plots(df_fr):
     fig, axes = plt.subplots(1,1,figsize=(15, 15))
