@@ -8,9 +8,49 @@ import plotly.express as px
 # Chargement des datasets
 @st.cache_data
 def load_data():
-    df_fr = pd.read_csv("data/mars-2014-complete.csv", encoding="latin1", sep=";")
-    df_eu = pd.read_csv("data/CO2_passenger_cars_v10.csv", sep ="\t", encoding='utf-8', index_col='id', on_bad_lines='warn')
-    return df_fr, df_eu
+    ademe_2014 = pd.read_csv("data/ademe_2014_clean.csv", encoding="utf-8", sep=",")
+    europe_2014 = pd.read_csv("data/europe_2014_clean.csv", sep =",", encoding='utf-8', index_col='id', on_bad_lines='warn')
+    
+    # Renommer les colonnes ademe
+    ademe_2014=ademe_2014.rename(columns={'puiss_admin_98': 'Puissance administrative',
+                                  'puiss_max': 'Puissance maximale (kW)',
+                                  'conso_urb': 'Consommation urbaine (l/100km)',
+                                  'conso_exurb': 'Consommation extra urbaine (l/100km)',
+                                  'conso_mixte': 'Consommation mixte (l/100km)',
+                                  'co2': 'Co2 (g/km)',
+                                  'co_typ_1': 'CO type I (g/km)',
+                                  'ptcl': 'Particules (g/km)',
+                                  'nox':'NOx (g/km)',
+                                  'masse_ordma_max': 'masse en ordre de marche max',
+                                  'masse_ordma_min': 'masse en ordre de marche min'})
+                                  
+    # Renommer les colonnes Europe 2014
+    europe_2014=europe_2014.rename(columns={'Mh':'Fabricant',
+                                        'T':'Type',
+                                        'Va': 'Variante',
+                                        'Ve': 'Version',
+                                        'Mk' : 'Marque',
+                                        'Cn': 'Nom Commercial',
+                                        'e (g/km)': 'Co2 (g/km)',
+                                        'm (kg)': 'Masse en ordre de marche',
+                                        'Ft': 'Carburant',
+                                        'ec (cm3)': 'Cylindrée (cm3)',
+                                        'ep (KW)': 'Puissance (KW)',
+                                        'w(mm)': 'Empattement (mm)',
+                                        'at1 (mm)': 'Largeur essieu directeur (mm)',
+                                        'at2 (mm)': 'Largeur autre essieu (mm)',
+                                        'w (mm)': 'Empattement (mm)',
+                                        'z (Wh/km)' :'Consommation électrique (Wh/km)'})
+    return ademe_2014, europe_2014
+    
+
+                                  
+
+
+
+
+
+    
 
 # Fonction pour générer le boxplot
 @st.cache_data
@@ -21,10 +61,11 @@ def generate_boxplot(df_plot):
                  title='Distribution interactive des émissions de CO2')
     return fig
 
+
 # Fonction pour générer l'histogramme
 @st.cache_data
 def generate_histogram(df_fr, df_eu):
-    fig, axes = plt.subplots(1, 1, figsize=(18, 5))
+    fig, axes = plt.subplots(1, 2, figsize=(18, 5))
 
     # Histogramme pour Europe 2014
     sns.histplot(df_eu['e (g/km)'], ax=axes[0], bins=30, kde=False, color="#21918c", alpha=0.6, label="Europe 2014")
@@ -40,10 +81,21 @@ def generate_histogram(df_fr, df_eu):
 
     return fig
 
+# Fonction pour générer la matrice de corrélation ademe 2014
+def generate_heatmap(ademe_2014):
+    # Sélectionner les variables numériques
+    ademe_numerique=ademe_2014.select_dtypes(include=['number'])
+    ademe_numerique=ademe_numerique.drop(['Consommation extra urbaine (l/100km)','hcnox'], axis=1)
+    heatmap=ademe_numerique.corr()
+    fig =  plt.figure(figsize=(8,6))
+    sns.heatmap(heatmap,cmap="viridis",annot=True, fmt=".2f", linewidths=0.5, linecolor="gray", cbar=True)
+    plt.title('Matrice de corrélation ADEME 2014')
+    return fig
+
 # Fonction pour générer le graphique KDE (densité)
 @st.cache_data
 def generate_kde_plot(df_fr, df_eu):
-    fig, axes = plt.subplots(1,1,figsize=(18, 5))
+    fig, axes = plt.subplots(1,2,figsize=(18, 5))
 
     # KDE pour Europe 2014
     sns.kdeplot(df_eu['e (g/km)'], ax=axes[1], fill=True, alpha=0.5, color="#21918c", label="Europe 2014")
@@ -151,6 +203,12 @@ def show():
                 Ce déséquilibre peut également influencer les prédictions d'émissions des autres véhicules.
 
                 """)
+    #Générer la heatmap
+    fig_heatmap = generate_heatmap(df_fr)
+    
+    #Affichage de la heatmap
+    st.pyplot(fig_heatmap)
+    
     # Générer les graphiques de répartition
     fig_distribution = generate_distribution_plots(df_fr)
 
