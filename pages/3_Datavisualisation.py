@@ -196,7 +196,7 @@ def show():
     fig_heatmap = generate_heatmap(df_fr)
     
     #Affichage de la heatmap
-    st.pyplot(fig_heatmap)
+    st.pyplot(fig_heatmap.get_figure())
     
     st.markdown("""
     On remarque une forte corrélation entre les émissions de CO2 et la consommation des véhicules (<0.97). Plus un véhicule consomme de carburant, plus celui-ci émet de CO2. 
