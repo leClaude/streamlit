@@ -151,6 +151,7 @@ def show():
                 Dans le jeu de données de l'ADEME, la médiane des émissions de CO2 est de 205 g/km, avec une majorité des valeurs regroupées autour de cette médiane. Plusieurs valeurs aberrantes sont observées, en dessous de 150 g/km et au-dessus de 250 g/km, ce qui pourrait correspondre à des véhicules très économes en carburant ou très polluants. En revanche, dans le jeu de données européen, la médiane des émissions de CO2 est plus faible, se situant autour de 132 g/km. La boîte est également plus étroite, suggérant une faible variabilité des émissions. Bien que les deux jeux de données présentent des valeurs extrêmes, celles-ci sont plus fréquentes dans le jeu de données européen.
                 """)
 
+    st.subheader("Distribution des émissions de CO2 dans les deux datasets")
     # Générer l'histogramme en utilisant la fonction mise en cache
     fig_histogram = generate_histogram(df_fr, df_eu)
 
@@ -161,17 +162,6 @@ def show():
                 L'histogramme ci-dessus illustre la répartition des émissions de CO2 dans les deux jeux de données : Ademe 2014 (en jaune) et Europe 2014 (en bleu-vert). On observe que, de manière générale, les émissions sont plus élevées dans le jeu de données de l'Ademe, avec un pic autour de 200 g/km. Les véhicules de cette base de données semblent ainsi être, en moyenne, plus polluants que ceux présents dans la base Europe 2014.
                 """)
     
-    # Générer le graphique KDE en utilisant la fonction mise en cache
-    fig_kde = generate_kde_plot(df_fr, df_eu)
-
-    # Affichage du graphique KDE
-    st.pyplot(fig_kde)
-
-    st.markdown("""
-                
-                Le graphique ci-dessus représente la densité des émissions de CO2 pour chaque dataset. Il permet de mieux visualiser la distribution sans être affecté par les tailles d’échantillons différentes. Ces deux courbes confirment ce que nous avons pu observer précédemment. La distribution des émissions de CO2 dans le jeux de données de l’Ademe est plus concentrée et possède un pic très marqué autour de  200g/km. Cela suggère que les véhicules de cette base sont plus homogènes et ont, en moyenne, des émissions plus élevées.
-
-                """)
     
     st.subheader("Répartition des entrées par constructeur et carrosserie")
 
@@ -184,6 +174,8 @@ def show():
                 Ce déséquilibre peut également influencer les prédictions d'émissions des autres véhicules.
 
                 """)
+                
+    st.subheader("Matrice de correlation du dataset ADEME")
     #Générer la heatmap
     fig_heatmap = generate_heatmap(df_fr)
     
