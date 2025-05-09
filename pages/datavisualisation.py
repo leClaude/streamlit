@@ -92,6 +92,18 @@ def generate_heatmap(ademe_2014):
     plt.title('Matrice de corrélation ADEME 2014')
     return fig
 
+# Création du graphique plot
+def generate_plot(ademe_2014)
+    fig = plt.figure(figsize=(12, 8))
+    sns.set_style("whitegrid")
+    sns.scatterplot(x='Consommation mixte (l/100km)', y='Co2 (g/km)', hue='cod_cbr_grouped', data=ademe_2014,alpha=0.7,s=80, palette='deep')
+    plt.xlabel("Consommation mixte de carburant (en l/100km)")
+    plt.ylabel("Emission de CO2 (en g/km)")
+    plt.legend(title="Type de carburant")
+    plt.title("Émissions de CO2 en fonction de la consommation et du carburant selon l'Ademe 2014")
+    font_prop = FontProperties(weight='bold', size=11)
+    plt.legend(title='Type de carburant',title_fontproperties=font_prop)
+    return fig
 
 def generate_distribution_plots(df_fr):
     fig, axes = plt.subplots(1,2,figsize=(15, 15))
@@ -168,6 +180,13 @@ def show():
     
     #Affichage de la heatmap
     st.pyplot(fig_heatmap)
+    
+    st.subheader("Emissions de CO2 en fonction de la consommation et du type de carburant")
+    #Générer le graphique
+    fig_plot = generate_plot(df_fr)
+    
+    #Affichage de la heatmap
+    st.pyplot(fig_plot)
     
     st.subheader("Répartition des entrées par constructeur et carrosserie du dataset ADEME")
     # Générer les graphiques de répartition
