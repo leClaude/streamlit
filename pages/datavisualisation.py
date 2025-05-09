@@ -65,7 +65,7 @@ def generate_boxplot(df_plot):
 # Fonction pour générer l'histogramme
 @st.cache_data
 def generate_histogram(df_fr, df_eu):
-    fig = plt.subplots = (figsize=(18, 5))
+    fig = figsize=(18, 5)
 
     # Histogramme pour Europe 2014
     sns.histplot(df_eu['Co2 (g/km)'], ax=axes[0], bins=30, kde=False, color="#21918c", alpha=0.6, label="Europe 2014")
