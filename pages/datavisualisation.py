@@ -93,7 +93,7 @@ def generate_heatmap(ademe_2014):
     return fig
 
 # Création du graphique plot
-def generate_plot(ademe_2014)
+def generate_plot(ademe_2014):
     fig = plt.figure(figsize=(12, 8))
     sns.set_style("whitegrid")
     sns.scatterplot(x='Consommation mixte (l/100km)', y='Co2 (g/km)', hue='cod_cbr_grouped', data=ademe_2014,alpha=0.7,s=80, palette='deep')
