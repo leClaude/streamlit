@@ -176,13 +176,12 @@ def show():
      # Affichage des graphiques dans Streamlit
     st.pyplot(fig_distribution)
     st.markdown("""
-                ### Répartition des constructeurs
+                #Répartition des constructeurs
                 Lorsque l'on regarde les constructeurs présents dans le jeu de données de l'Ademe, on remarque une très forte représentation des véhicules Mercedes (65.8%) ainsi que Volkswagen(24.9%). Les autres constructeurs sont regroupés dans la catégorie “Autres” et ne représentent que 9,3%.
                 Cette répartition des constructeurs peut potentiellement influencer les résultats si l’on cherche à généraliser l’analyse à l’ensemble du marché automobile.
-                ###Répartition des carrosseries
+                #Répartition des carrosseries
                 Les minibus dominent avec 83.8%. Les berlines représentent 8% du total. Les autres carrosseries sont très peu représentées.
                 Ce déséquilibre peut également influencer les prédictions d'émissions des autres véhicules.
-
                 """)
                 
     
