@@ -119,8 +119,7 @@ def generate_plot(ademe_2014):
     plt.ylabel("Emission de CO2 (en g/km)")
     plt.legend(title="Type de carburant")
     plt.title("Émissions de CO2 en fonction de la consommation et du carburant selon l'Ademe 2014")
-    font_prop = FontProperties(weight='bold', size=11)
-    plt.legend(title='Type de carburant',title_fontproperties=font_prop)
+    plt.legend(title='Type de carburant')
     return fig
 
 def generate_distribution_plots(df_fr):
