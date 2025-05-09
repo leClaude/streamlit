@@ -198,13 +198,23 @@ def show():
     #Affichage de la heatmap
     st.pyplot(fig_heatmap)
     
+    st.markdown("""
+    On remarque une forte corrélation entre les émissions de CO2 et la consommation des véhicules (<0.97). Plus un véhicule consomme de carburant, plus celui-ci émet de CO2. 
+    On note également, un lien entre la masse du véhicule et les émissions de CO2(entre 0.54 et 0.64). Plus un véhicule est lourd, plus il consomme et donc émet de CO2.
+                """)
+
     st.subheader("Emissions de CO2 en fonction de la consommation et du type de carburant")
     #Générer le graphique
     fig_plot = generate_plot(df_fr)
     
-    #Affichage de la heatmap
+    #Affichage du graphe CO2 vs conso
     st.pyplot(fig_plot)
     
+    st.markdown("""
+    On remarque une corrélation linéaire forte entre la consommation de carburant et les émissions de CO2. 
+    Cette corrélation est attendue puisque la combustion du carburant entraîne directement la production de CO2.
+                """)
+                
     st.subheader("Répartition des entrées par constructeur et carrosserie du dataset ADEME")
     # Générer les graphiques de répartition
     fig_distribution = generate_distribution_plots(df_fr)
