@@ -94,6 +94,24 @@ def generate_heatmap(ademe_2014):
 
 # Création du graphique plot
 def generate_plot(ademe_2014):
+    # Renommer les valeurs de la colonne cod_cbr (type de carburant)
+    mapping={'EE':'Essence/Electrique',
+         'EH': 'Essence/Electrique',
+         'EL': 'Electrique',
+         'GH':'Gazole / Electrique',
+         'GL':'Gazole / Electrique',
+         'GO':'Gazole',
+         'ES/GP' : "Essence / GPL",
+         'GP/ES':"Essence / GPL",
+         'ES':'Essence',
+         'ES/GN':'Essence /  GNV',
+         'GN/ES':'Essence /  GNV',
+         'FE' : 'Véhicule E85',
+         'GN' : 'GNV',
+         'H2' : 'Hydrogène'}
+
+    ademe_2014['cod_cbr_grouped'] = ademe_2014['cod_cbr'].replace(mapping)
+    
     fig = plt.figure(figsize=(12, 8))
     sns.set_style("whitegrid")
     sns.scatterplot(x='Consommation mixte (l/100km)', y='Co2 (g/km)', hue='cod_cbr_grouped', data=ademe_2014,alpha=0.7,s=80, palette='deep')
