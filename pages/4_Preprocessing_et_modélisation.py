@@ -10,6 +10,8 @@ import plotly.express as px
 
 st.title("Preprocessing et modélisation")
 
+st.subtitle("Preprocessing")
+
 @st.cache_data
 def load_data():
     ademe_2014 = pd.read_csv("data/mars-2014-complete.csv", encoding="latin1", sep=";")
