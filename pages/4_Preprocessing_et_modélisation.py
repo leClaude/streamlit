@@ -10,7 +10,7 @@ import plotly.express as px
 
 st.title("Preprocessing et modélisation")
 
-st.subtitle("Preprocessing")
+st.subheader("Preprocessing")
 
 @st.cache_data
 def load_data():
