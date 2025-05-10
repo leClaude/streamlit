@@ -11,7 +11,11 @@ import plotly.express as px
 st.title("Preprocessing et modélisation")
 
 @st.cache_data
-ademe_2014 = pd.read_csv("data/mars-2014-complete.csv", encoding="latin1", sep=";")
+def load_data():
+    ademe_2014 = pd.read_csv("data/mars-2014-complete.csv", encoding="latin1", sep=";")
+    return ademe_2014
+
+ademe_2014 = load_data()
 
 prep_code = """
 # Liste des valeurs qu'on veut convertir en numerique
