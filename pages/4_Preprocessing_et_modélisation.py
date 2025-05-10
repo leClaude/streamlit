@@ -13,7 +13,7 @@ st.title("Preprocessing et modélisation")
 @st.cache_data
 ademe_2014 = pd.read_csv("data/mars-2014-complete.csv", encoding="latin1", sep=";")
 
-prep_code = st.text_area("
+prep_code = """
 # Liste des valeurs qu'on veut convertir en numerique
 ademe_numeric_names = ['puiss_admin_98','puiss_max','conso_urb','conso_exurb','conso_mixte','co2','co_typ_1','hc','nox','hcnox','ptcl','masse_ordma_min','masse_ordma_max']
 # Liste des valeurs catégorielle (sans l'index)
@@ -40,7 +40,6 @@ ademe_2014 = ademe_2014.drop('Unnamed: 29', axis=1)
 
 # suppression mais à voir pour la jointure avec europe: champ_v9
 ademe_2014 = ademe_2014.drop('champ_v9', axis=1)
-")
+"""
 
-if st.button("Exécuter"):
-    exec(prep_code)
+st.code(prep_code, language="python")
