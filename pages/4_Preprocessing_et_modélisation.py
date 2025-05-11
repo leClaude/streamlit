@@ -205,7 +205,7 @@ param_grid = {
 
 # Create a pipeline with preprocessing and the model
 @st.cache_resource
-def load_pipeline(gbr,preprocessor):
+def load_pipeline(_gbr,preprocessor):
     model_pipeline = Pipeline(steps=[
         ('preprocessor', preprocessor),
         ('model', gbr)
