@@ -224,7 +224,7 @@ def train_model():
     grid_search.fit(X_train, y_train)
     pass
 
-thead = threading.Thread(target=train_model)
+thread = threading.Thread(target=train_model)
 thread.start()
 thread.join()
 
