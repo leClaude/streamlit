@@ -184,7 +184,13 @@ preprocessor = ColumnTransformer(
     ])
 
 # Create the GradientBoostingRegressor model
-gbr = GradientBoostingRegressor()
+@st.cache_resource
+def load_model():
+    # Charger un modèle ML ou en entraîner un
+    model = GradientBoostingRegressor()
+    return model
+    
+gbr = load_model()
 
 # Define the hyperparameter grid for GridSearchCV
 # Access the model parameters using 'model__' prefix
