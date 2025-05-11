@@ -1,6 +1,20 @@
 import streamlit as st
+import streamlit as st
 import pandas as pd
-from sklearn.model_selection import GridSearchCV
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from plotly import graph_objs as go
+from plotly.subplots import make_subplots
+import plotly.express as px
+import category_encoders as ce
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, RobustScaler, StandardScaler, MinMaxScaler
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.metrics import mean_squared_error, r2_score
 
 st.title("Entraînement du Modèle")
 
