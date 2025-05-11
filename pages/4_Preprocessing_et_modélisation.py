@@ -220,7 +220,7 @@ import threading
 grid_search = None
 
 def train_model():
-    grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
+    global grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
     grid_search.fit(X_train, y_train)
     pass
 
