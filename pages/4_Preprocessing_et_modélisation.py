@@ -240,11 +240,11 @@ r2 = r2_score(y_test, y_pred)
 
 st.subheader("Résultats")
 
-st.write("MSE : {mse}")
-st.write("r2 : {r2}")
+st.write(f"MSE : **{mse}**")
+st.write(f"r2 : **{r2}**")
 
 def result_graph(_y_pred, _y_test):
-    fig = plt.figure(figsize = (10,10))
+    fig = plt.figure(figsize = (18,5))
     plt.scatter(y_pred, y_test, c='green')
     plt.plot((y_test.min(), y_test.max()), (y_test.min(), y_test.max()), color = 'red')
     plt.xlabel("prediction")
