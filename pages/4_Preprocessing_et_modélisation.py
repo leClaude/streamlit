@@ -23,6 +23,8 @@ st.subheader("Preprocessing Ademe 2014")
 @st.cache_data
 def load_data():
     ademe_2014 = pd.read_csv("data/mars-2014-complete.csv", encoding="latin1", sep=";")
+    ademe_2014 = ademe_2014.drop_duplicates()
+    df_sample = ademe_2014.sample(frac=0.1, random_state=42)
     return ademe_2014
 
 ademe_2014 = load_data()
