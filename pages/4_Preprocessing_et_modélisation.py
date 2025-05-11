@@ -224,7 +224,7 @@ model_pipeline = load_pipeline(gbr,preprocessor)
 
 # Perform GridSearchCV to find the best hyperparameters
 @st.cache_resource 
-def grid_search_cv(model_pipeline,param_grid):
+def grid_search_cv(_model_pipeline,_param_grid):
     grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
     grid_search.fit(X_train, y_train)
     return grid_search
