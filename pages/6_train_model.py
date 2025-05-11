@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from sklearn.model_selection import GridSearchCV
 
 st.title("Entraînement du Modèle")
