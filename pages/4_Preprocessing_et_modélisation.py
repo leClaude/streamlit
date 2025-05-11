@@ -84,6 +84,7 @@ ademe_2014 = ademe_2014.replace({'EE' : 'essence / électrique (rechargeable)', 
 'H2' : 'hydrogène'})
 
 st.subheader("Modelisation Ademe 2014 : GradientBoostingRegressor")
+
 modele_code = """
 # Define categorical and numerical features
 categorical_features = ['Carrosserie', 'gamme', 'cod_cbr', 'lib_mrq', 'hybride']
@@ -158,3 +159,77 @@ print(f"R2: {r2}")
 """
 
 st.code(modele_code, language="python")
+
+# Define categorical and numerical features
+categorical_features = ['Carrosserie', 'gamme', 'cod_cbr', 'lib_mrq', 'hybride']
+numerical_features = ['puiss_admin_98', 'puiss_max', 'ptcl', 'masse_ordma_min', 'masse_ordma_max']
+
+# Prepare the features and target
+feats = ademe_2014[categorical_features + numerical_features]
+target = ademe_2014['co2']
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(feats, target, test_size=0.2, random_state=42)
+
+# Create a pipeline for preprocessing
+# 1. Handle categorical features
+categorical_transformer = Pipeline(steps=[
+    ('onehot', ce.OneHotEncoder(use_cat_names=True, handle_unknown='ignore', handle_missing='value')), # Use category_encoders' OneHotEncoder
+    ('imputer_cat', SimpleImputer(strategy='most_frequent')) # Impute missing values in categorical features after OneHotEncoding
+])
+
+# 2. Handle numerical features
+numerical_transformer = Pipeline(steps=[
+    ('imputer_num', SimpleImputer(strategy='mean')),
+    ('scaler', StandardScaler())
+])
+
+# 3. Combine transformers using ColumnTransformer
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('cat', categorical_transformer, categorical_features),
+        ('num', numerical_transformer, numerical_features)
+    ])
+
+# Create the GradientBoostingRegressor model
+gbr = GradientBoostingRegressor()
+
+# Define the hyperparameter grid for GridSearchCV
+# Access the model parameters using 'model__' prefix
+param_grid = {
+    'model__n_estimators': [50],
+    'model__learning_rate': [0.01, 0.1, 0.2],
+    'model__max_depth': [3, 5, 7],
+    'model__min_samples_split': [2, 5, 10],
+    'model__min_samples_leaf': [1, 2, 4],
+    'model__subsample': [0.8, 0.9, 1.0],
+}
+
+# Create a pipeline with preprocessing and the model
+model_pipeline = Pipeline(steps=[
+    ('preprocessor', preprocessor),
+    ('model', gbr)
+])
+
+
+#    'model__n_estimators': [50, 100, 200],
+#    'model__learning_rate': [0.01, 0.1, 0.2],
+#     'model__max_depth': [3, 5, 7],
+#     'model__min_samples_split': [2, 5, 10],
+#    'model__min_samples_leaf': [1, 2, 4],
+#    'model__subsample': [0.8, 0.9, 1.0],
+
+# Perform GridSearchCV to find the best hyperparameters
+grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
+grid_search.fit(X_train, y_train)
+
+# Print the best parameters and evaluate the model
+#print("Meilleurs paramètres:", grid_search.best_params_)
+best_params = grid_search.best_params_
+y_pred = grid_search.best_estimator_.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+st.write("Meilleurs paramètres : {best_params}")
+st.write("MSE : {mse}")
+st.write("r2 : {r2}")
