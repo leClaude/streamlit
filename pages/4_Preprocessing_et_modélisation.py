@@ -242,7 +242,7 @@ thread.start()
 #grid_search = grid_search_cv(model_pipeline,param_grid,X_train,y_train)
 
 # Print the best parameters and evaluate the model
-y_pred = grid_s.best_estimator_.predict(X_test)
+y_pred = grid_search.best_estimator_.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
