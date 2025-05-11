@@ -1,1 +1,1 @@
-streamlit run co2_app.py --server.port=80
+streamlit run co2_app.py --server.port=80 --logger.level=debug
