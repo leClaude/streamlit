@@ -220,13 +220,17 @@ import threading
 grid_search = None
 
 def train_model():
-    global grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
+    grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
     grid_search.fit(X_train, y_train)
-    pass
+    return grid_search
+
+
 
 thread = threading.Thread(target=train_model)
 thread.start()
 thread.join()
+
+gread_search = train_model()
 
 #@st.cache_resource(ttl=6000)
 #def grid_search_cv(_model_pipeline,_param_grid, _X_train, _y_train):
