@@ -4,3 +4,5 @@ pandas
 matplotlib
 plotly
 seaborn
+category_encoders
+sklearn
