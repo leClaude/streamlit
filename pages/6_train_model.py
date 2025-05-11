@@ -21,7 +21,8 @@ st.title("Entraînement du Modèle")
 @st.cache_data
 def load_data():
     ademe_2014 = pd.read_csv("data/mars-2014-complete.csv", encoding="latin1", sep=";")
-    return ademe_2014
+    df_sample = ademe_2014.sample(frac=0.1, random_state=42)
+    return df_sample
 
 ademe_2014 = load_data()
 
