@@ -216,21 +216,28 @@ model_pipeline = load_pipeline(gbr,preprocessor)
 
 # Perform GridSearchCV to find the best hyperparameters
 import threading
+import pickle
 
-grid_search = None
-
+@st.cache_resource
 def train_model():
     grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
     grid_search.fit(X_train, y_train)
+    
+    with open("grid_search.pkl", "wb") as f:
+        pickle.dump(grid_search, f)  # Sauvegarde du modèle
     return grid_search
-
-
 
 thread = threading.Thread(target=train_model)
 thread.start()
 thread.join()
 
-gread_search = train_model()
+# Charger le modèle sauvegardé
+try:
+    with open("grid_search.pkl", "rb") as f:
+        grid_search = pickle.load(f)
+        st.success("Modèle chargé avec succès !")
+except FileNotFoundError:
+    st.error("Le modèle n'est pas encore prêt.")
 
 #@st.cache_resource(ttl=6000)
 #def grid_search_cv(_model_pipeline,_param_grid, _X_train, _y_train):
