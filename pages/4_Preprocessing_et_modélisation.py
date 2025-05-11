@@ -8,13 +8,13 @@ from plotly import graph_objs as go
 from plotly.subplots import make_subplots
 import plotly.express as px
 import category_encoders as ce
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, RobustScaler, StandardScaler, MinMaxScaler
-from sklearn.impute import SimpleImputer
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.metrics import mean_squared_error, r2_score
+from scikit-learn.model_selection import train_test_split, GridSearchCV
+from scikit-learn.ensemble import GradientBoostingRegressor
+from scikit-learn.preprocessing import OneHotEncoder, OrdinalEncoder, RobustScaler, StandardScaler, MinMaxScaler
+from scikit-learn.impute import SimpleImputer
+from scikit-learn.pipeline import Pipeline
+from scikit-learn.compose import ColumnTransformer
+from scikit-learn.metrics import mean_squared_error, r2_score
 
 st.title("Preprocessing et modélisation")
 
