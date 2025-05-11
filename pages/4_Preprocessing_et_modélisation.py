@@ -214,24 +214,19 @@ def load_pipeline(_gbr,_preprocessor):
  
 model_pipeline = load_pipeline(gbr,preprocessor)
 
-
-#    'model__n_estimators': [50, 100, 200],
-#    'model__learning_rate': [0.01, 0.1, 0.2],
-#     'model__max_depth': [3, 5, 7],
-#     'model__min_samples_split': [2, 5, 10],
-#    'model__min_samples_leaf': [1, 2, 4],
-#    'model__subsample': [0.8, 0.9, 1.0],
-
 # Perform GridSearchCV to find the best hyperparameters
 import threading
+
+grid_search = None
 
 def train_model():
     grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
     grid_search.fit(X_train, y_train)
     pass
 
-grid_search = threading.Thread(target=train_model)
-gread_search.start()
+thead = threading.Thread(target=train_model)
+thread.start()
+thread.join()
 
 #@st.cache_resource(ttl=6000)
 #def grid_search_cv(_model_pipeline,_param_grid, _X_train, _y_train):
