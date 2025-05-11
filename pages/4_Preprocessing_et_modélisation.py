@@ -230,8 +230,8 @@ def train_model():
     grid_search.fit(X_train, y_train)
     pass
 
-thread = threading.Thread(target=train_model)
-thread.start()
+grid_search = threading.Thread(target=train_model)
+gread_search.start()
 
 #@st.cache_resource(ttl=6000)
 #def grid_search_cv(_model_pipeline,_param_grid, _X_train, _y_train):
