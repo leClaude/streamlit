@@ -46,12 +46,6 @@ ademe_2014.dropna(subset = ['co2'], axis=0, inplace = True)
 ademe_2014 = ademe_2014.drop('hc', axis=1)
 ademe_2014 = ademe_2014.drop('date_maj', axis=1)
 
-#suppression tout en NaN : Unnamed: 26 ,Unnamed: 27 ,Unnamed: 28 ,Unnamed: 29
-ademe_2014 = ademe_2014.drop('Unnamed: 26', axis=1)
-ademe_2014 = ademe_2014.drop('Unnamed: 27', axis=1)
-ademe_2014 = ademe_2014.drop('Unnamed: 28', axis=1)
-ademe_2014 = ademe_2014.drop('Unnamed: 29', axis=1)
-
 # suppression mais à voir pour la jointure avec europe: champ_v9
 ademe_2014 = ademe_2014.drop('champ_v9', axis=1)
 
@@ -80,12 +74,6 @@ ademe_2014.dropna(subset = ['co2'], axis=0, inplace = True)
 
 ademe_2014 = ademe_2014.drop('hc', axis=1)
 ademe_2014 = ademe_2014.drop('date_maj', axis=1)
-
-#suppression tout en NaN : Unnamed: 26 ,Unnamed: 27 ,Unnamed: 28 ,Unnamed: 29
-ademe_2014 = ademe_2014.drop('Unnamed: 26', axis=1)
-ademe_2014 = ademe_2014.drop('Unnamed: 27', axis=1)
-ademe_2014 = ademe_2014.drop('Unnamed: 28', axis=1)
-ademe_2014 = ademe_2014.drop('Unnamed: 29', axis=1)
 
 # suppression mais à voir pour la jointure avec europe: champ_v9
 ademe_2014 = ademe_2014.drop('champ_v9', axis=1)
