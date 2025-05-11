@@ -216,14 +216,11 @@ grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5
 grid_search.fit(X_train, y_train)
 
 # Print the best parameters and evaluate the model
-#print("Meilleurs paramètres:", grid_search.best_params_)
-best_params = grid_search.best_params_
 y_pred = grid_search.best_estimator_.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
-st.subheader("Modelisation Ademe 2014 : GradientBoostingRegressor")
+st.subheader("Résultats")
 
-st.write("Meilleurs paramètres : {best_params}")
 st.write("MSE : {mse}")
 st.write("r2 : {r2}")
