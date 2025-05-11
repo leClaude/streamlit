@@ -148,14 +148,6 @@ model_pipeline = Pipeline(steps=[
 # Perform GridSearchCV to find the best hyperparameters
 grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
 grid_search.fit(X_train, y_train)
-
-# Print the best parameters and evaluate the model
-print("Meilleurs paramètres:", grid_search.best_params_)
-y_pred = grid_search.best_estimator_.predict(X_test)
-mse = mean_squared_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
-print(f"MSE: {mse}")
-print(f"R2: {r2}")
 """
 
 st.code(modele_code, language="python")
@@ -229,6 +221,8 @@ best_params = grid_search.best_params_
 y_pred = grid_search.best_estimator_.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
+
+st.subheader("Modelisation Ademe 2014 : GradientBoostingRegressor")
 
 st.write("Meilleurs paramètres : {best_params}")
 st.write("MSE : {mse}")
