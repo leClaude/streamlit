@@ -223,14 +223,6 @@ def train_model():
 
 grid_search = train_model()
 
-# Charger le modèle sauvegardé
-try:
-    with open("grid_search.pkl", "rb") as f:
-        grid_search = pickle.load(f)
-        st.success("Modèle chargé avec succès !")
-except FileNotFoundError:
-    st.error("Le modèle n'est pas encore prêt.")
-
 #@st.cache_resource(ttl=6000)
 #def grid_search_cv(_model_pipeline,_param_grid, _X_train, _y_train):
 #    grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
@@ -248,3 +240,15 @@ st.subheader("Résultats")
 
 st.write("MSE : {mse}")
 st.write("r2 : {r2}")
+
+def result_graph(_y_pred, _y_test):
+    fig = plt.figure(figsize = (10,10))
+    plt.scatter(y_pred, y_test, c='green')
+    plt.plot((y_test.min(), y_test.max()), (y_test.min(), y_test.max()), color = 'red')
+    plt.xlabel("prediction")
+    plt.ylabel("vrai valeur")
+    return fig
+
+fig_result = result_graph(y_pred,y_test)
+
+st.plotly_chart(fig_result, use_container_width=True)
