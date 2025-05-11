@@ -212,7 +212,6 @@ def load_pipeline(gbr,preprocessor):
     ])
     return model_pipeline
  
-@st.cache_resource 
 model_pipeline = load_pipeline(gbr,preprocessor)
 
 
