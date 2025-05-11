@@ -229,6 +229,7 @@ def grid_search_cv(_model_pipeline,_param_grid):
     grid_search.fit(X_train, y_train)
     return grid_search
 
+@st.cache_resource 
 grid_search = grid_search_cv(model_pipeline,param_grid)
 
 # Print the best parameters and evaluate the model
