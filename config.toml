@@ -1,0 +1,10 @@
+[server]
+port = 80              # Définit le port de l'application
+enableCORS = false        # Désactive la protection CORS
+websocket_timeout = 600
+
+[client]
+showErrorDetails = true   # Affiche les erreurs détaillées côté utilisateur
+
+[runner]
+magicEnabled = true       # Active l'exécution automatique des cellules

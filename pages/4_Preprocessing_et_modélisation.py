@@ -204,10 +204,16 @@ param_grid = {
 }
 
 # Create a pipeline with preprocessing and the model
-model_pipeline = Pipeline(steps=[
-    ('preprocessor', preprocessor),
-    ('model', gbr)
-])
+@st.cache_resource
+def load_pipeline(gbr,preprocessor):
+    model_pipeline = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('model', gbr)
+    ])
+    return model_pipeline
+ 
+@st.cache_resource 
+model_pipeline = load_pipeline(gbr,preprocessor)
 
 
 #    'model__n_estimators': [50, 100, 200],
@@ -218,8 +224,13 @@ model_pipeline = Pipeline(steps=[
 #    'model__subsample': [0.8, 0.9, 1.0],
 
 # Perform GridSearchCV to find the best hyperparameters
-grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
-grid_search.fit(X_train, y_train)
+@st.cache_resource 
+def grid_search_cv(model_pipeline,param_grid):
+    grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
+    grid_search.fit(X_train, y_train)
+    return grid_search
+
+grid_search = grid_search_cv(model_pipeline,param_grid)
 
 # Print the best parameters and evaluate the model
 y_pred = grid_search.best_estimator_.predict(X_test)
