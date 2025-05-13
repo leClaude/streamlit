@@ -292,18 +292,4 @@ feat_importances = feat_importances.head(10)
 feature_names = model_pipeline.named_steps['preprocessor'].get_feature_names_out()
 
 st.dataframe(feat_importances)
-'''
-def importance_graph(_top_features):
-    fig = plt.figure(figsize=(10, 8))
-    top_features.plot(kind='barh', color='skyblue')
-    plt.gca().invert_yaxis()
-    plt.title("Top 10 des variables les plus importantes (GradientBoosting) ADEME")
-    plt.xlabel("Importance")
-    plt.grid(axis='x')
-    plt.tight_layout()
-    return fig
 
-fig_importance = importance_graph(top_features)
-
-st.plotly_chart(fig_importance, use_container_width=True)
-'''
