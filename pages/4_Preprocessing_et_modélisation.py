@@ -289,10 +289,10 @@ feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transfor
 feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
 
 st.dataframe(feat_importances)
-'''    
+
 def importance_graph(_reg,_X_train_transformed_2):
     fig = plt.figure(figsize = (10,10))
-    feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed_2.columns, columns=["Importance"])
+    feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed_2.index, columns=["Importance"])
     feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
 
     ax = fig.add_subplot(1,1,1)
@@ -305,5 +305,5 @@ def importance_graph(_reg,_X_train_transformed_2):
 fig_importance = importance_graph(reg, X_train_transformed_2)
 
 st.plotly_chart(fig_importance, use_container_width=True)
-'''
+
 
