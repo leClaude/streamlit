@@ -296,7 +296,7 @@ def importance_graph(_reg,_feat_importances):
     ax.barh(y = feat_importances.index,width= feat_importances["Importance"] )
     ax.set_title("Importance")
     ax.set_xlabel("indicateur")
-    ax.set_ylabel(feat_importances.index)
+    ax.set_yticks(feat_importances.index, labels=feat_importances.index)
     
     return fig
 
