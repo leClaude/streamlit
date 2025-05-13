@@ -229,7 +229,7 @@ def show():
     fig_distribution = generate_distribution_plots(df_fr)
 
      # Affichage des graphiques dans Streamlit
-    st.pyplot(fig_distribution)
+    st.plotly_chart(fig_distribution)
     st.markdown("""
                 ###### Répartition des constructeurs
                 Lorsque l'on regarde les constructeurs présents dans le jeu de données de l'Ademe, on remarque une très forte représentation des véhicules Mercedes (65.8%) ainsi que Volkswagen(24.9%). Les autres constructeurs sont regroupés dans la catégorie “Autres” et ne représentent que 9,3%.
