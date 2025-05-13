@@ -274,8 +274,8 @@ st.plotly_chart(fig_result, use_container_width=True)
 
 X_train_transformed = model_pipeline.named_steps['preprocessor'].transform(X_train)
 X_test_transformed = model_pipeline.named_steps['preprocessor'].transform(X_test)
-X_train_transformed = pd.DataFrame(X_train_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
-X_test_transformed = pd.DataFrame(X_test_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
+X_train_transformed_2 = pd.DataFrame(X_train_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
+X_test_transformed_2 = pd.DataFrame(X_test_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
 
 @st.cache_data
 def train_importance(_X_train_transformed, _y_train):
@@ -283,7 +283,7 @@ def train_importance(_X_train_transformed, _y_train):
     mod.fit(X_train_transformed, y_train)
     return mod
 
-reg = train_importance(X_train_transformed, y_train)
+reg = train_importance(X_train_transformed_2, y_train)
 
 def importance_graph(_reg,_X_train_transformed):
     fig = plt.figure(figsize = (5,10))
@@ -297,7 +297,7 @@ def importance_graph(_reg,_X_train_transformed):
     
     return fig
 
-fig_importance = importance_graph(reg, X_train_transformed)
+fig_importance = importance_graph(reg, X_train_transformed_2)
 
 st.plotly_chart(fig_importance, use_container_width=True)
 
