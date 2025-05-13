@@ -290,18 +290,19 @@ feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
 
 st.dataframe(feat_importances)
 
-def importance_graph(_reg,_feat_importances):
-    fig, ax = plt.subplots()
-    
+def importance_graph():
+    fig = plt.figure(figsize = (10,10))
+    feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed.columns, columns=["Importance"])
+    feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
+
+    ax = fig.add_subplot(1,1,1)
     ax.barh(y = feat_importances.index,width= feat_importances["Importance"] )
     ax.set_title("Importance")
     ax.set_xlabel("indicateur")
-    ax.set_yticks(feat_importances.index, labels=feat_importances.index)
-    ax.invert_yaxis() 
     
     return fig
 
-fig_importance = importance_graph(reg, X_train_transformed_2)
+fig_importance = importance_graph()
 
 st.plotly_chart(fig_importance, use_container_width=True)
 
