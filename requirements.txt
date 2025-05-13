@@ -6,3 +6,4 @@ plotly
 seaborn
 category_encoders
 scikit-learn
+openpyxl
