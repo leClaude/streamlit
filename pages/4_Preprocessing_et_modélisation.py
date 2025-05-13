@@ -14,7 +14,8 @@ from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, RobustScaler, S
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+import math
 
 st.title("Preprocessing et modélisation")
 
@@ -25,7 +26,7 @@ def load_data():
     ademe_2014 = pd.read_csv("data/mars-2014-complete.csv", encoding="latin1", sep=";")
     ademe_2014 = ademe_2014.drop_duplicates()
     df_sample = ademe_2014.sample(frac=0.1, random_state=42)
-    return df_sample
+    return ademe_2014
 
 ademe_2014 = load_data()
 
@@ -88,160 +89,188 @@ ademe_2014 = ademe_2014.replace({'EE' : 'essence / électrique (rechargeable)', 
 st.subheader("Modelisation Ademe 2014 : GradientBoostingRegressor")
 
 modele_code = """
-# Define categorical and numerical features
-categorical_features = ['Carrosserie', 'gamme', 'cod_cbr', 'lib_mrq', 'hybride']
-numerical_features = ['puiss_admin_98', 'puiss_max', 'ptcl', 'masse_ordma_min', 'masse_ordma_max']
+#'conso_urb','conso_exurb','conso_mixte','co_typ_1','nox','hcnox' sont exclues car issue de test après conception (comme notre variable cible)
 
-# Prepare the features and target
-feats = ademe_2014[categorical_features + numerical_features]
 target = ademe_2014['co2']
 
-# Split data into training and testing sets
+categorical_features_hors_hybride = ['Carrosserie', 'gamme', 'cod_cbr', 'lib_mrq']
+encoder_hybride = ['hybride']
+
+#categorical_features = categorical_features_hors_hybride + ordinal_encoder_hybride
+
+numerical_features = ['puiss_admin_98','puiss_max','ptcl','masse_ordma_min','masse_ordma_max']
+feats = ademe_2014[categorical_features_hors_hybride + encoder_hybride + numerical_features]
+
+
+# Split the data into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(feats, target, test_size=0.2, random_state=42)
 
-# Create a pipeline for preprocessing
-# 1. Handle categorical features
+# Création du pipeline de transformation et du modèle
+# 1. Traitement des colonnes catégorielles
+
+
+# on définit les encodeur pour pouvoir les injecter au choix dans la pipeline
+target_encoder_instance = ce.TargetEncoder(cols=categorical_features_hors_hybride)
+onehot_encoder_instance =  OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+
+#hybride est traité à part car 2 valeurs
+categorical_transformer_hybride = Pipeline(steps=[
+    ('cat_encoder_hybride', onehot_encoder_instance)])
+
 categorical_transformer = Pipeline(steps=[
-    ('onehot', ce.OneHotEncoder(use_cat_names=True, handle_unknown='ignore', handle_missing='value')), # Use category_encoders' OneHotEncoder
-    ('imputer_cat', SimpleImputer(strategy='most_frequent')) # Impute missing values in categorical features after OneHotEncoding
-])
+    ('cat_encoder', onehot_encoder_instance)])
 
-# 2. Handle numerical features
+# 2. Traitement des colonnes numériques
+
 numerical_transformer = Pipeline(steps=[
-    ('imputer_num', SimpleImputer(strategy='mean')),
-    ('scaler', StandardScaler())
-])
+    ('imputer', SimpleImputer(strategy='mean')),  # Remplacer les valeurs manquantes par la moyenne
+    ('scaler', StandardScaler())  ]) # Normalisation robuste
 
-# 3. Combine transformers using ColumnTransformer
+# preprocessing
 preprocessor = ColumnTransformer(
     transformers=[
-        ('cat', categorical_transformer, categorical_features),
+        ('cat', categorical_transformer, categorical_features_hors_hybride),
+        ('cat_hybride', categorical_transformer_hybride, encoder_hybride),
         ('num', numerical_transformer, numerical_features)
-    ])
+        ])
 
-# Create the GradientBoostingRegressor model
-gbr = GradientBoostingRegressor()
+#  Gradient Boosting:   GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
+# GradientBoostingRegressor(n_estimators=500, learning_rate: = 0.2,  max_depth = 7,  min_samples_leaf =  1,  min_samples_split =  5, n_estimators = 50, subsample = 0)
 
-# Define the hyperparameter grid for GridSearchCV
-# Access the model parameters using 'model__' prefix
-param_grid = {
-    'model__n_estimators': [50],
-    'model__learning_rate': [0.01, 0.1, 0.2],
-    'model__max_depth': [3, 5, 7],
-    'model__min_samples_split': [2, 5, 10],
-    'model__min_samples_leaf': [1, 2, 4],
-    'model__subsample': [0.8, 0.9, 1.0],
-}
+modele = GradientBoostingRegressor(n_estimators=500, learning_rate = 0.2,  max_depth = 7,  min_samples_leaf =  1,  min_samples_split =  5, subsample = 0.8, random_state=42)
 
-# Create a pipeline with preprocessing and the model
+# 4. Pipeline complet avec préprocessing et modèle
 model_pipeline = Pipeline(steps=[
     ('preprocessor', preprocessor),
-    ('model', gbr)
-])
+    ('model', modele) ])
+
+# Entraînement du modèle
+model_pipeline.fit(X_train, y_train)
 
 
-#    'model__n_estimators': [50, 100, 200],
-#    'model__learning_rate': [0.01, 0.1, 0.2],
-#     'model__max_depth': [3, 5, 7],
-#     'model__min_samples_split': [2, 5, 10],
-#    'model__min_samples_leaf': [1, 2, 4],
-#    'model__subsample': [0.8, 0.9, 1.0],
+# Prédictions et évaluation du modèle
+pred_test = model_pipeline.predict(X_test)
 
-# Perform GridSearchCV to find the best hyperparameters
-grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
-grid_search.fit(X_train, y_train)
+# Affichage des scores
+print("Score sur le jeu d'entraînement:", round(model_pipeline.score(X_train, y_train),3))
+print("Score sur le jeu de test:", round(model_pipeline.score(X_test, y_test),3))
+
+from sklearn.metrics import mean_squared_error
+MSE =  mean_squared_error(y_test, pred_test)
+print("MSE:",round(mean_squared_error(y_test, pred_test),2))
+import math
+print("RMSE: ",  round(math.sqrt(MSE),3))
+from sklearn.metrics import mean_absolute_error
+print("MAE: ",  round(mean_absolute_error(y_test, pred_test),3))
+
+
+
+import matplotlib.pyplot as plt
+fig = plt.figure(figsize = (10,10))
+plt.scatter(pred_test, y_test, c='green')
+plt.plot((y_test.min(), y_test.max()), (y_test.min(), y_test.max()), color = 'red')
+plt.xlabel("prediction")
+plt.ylabel("vrai valeur")
+plt.title(str(modele) + 'pour la prédiction')
+plt.show()
+
+
+X_train_transformed = model_pipeline.named_steps['preprocessor'].transform(X_train)
+X_test_transformed = model_pipeline.named_steps['preprocessor'].transform(X_test)
+X_train_transformed = pd.DataFrame(X_train_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
+X_test_transformed = pd.DataFrame(X_test_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
+
+reg = modele
+reg.fit(X_train_transformed, y_train)
 """
 
 st.code(modele_code, language="python")
 
-# Define categorical and numerical features
-categorical_features = ['Carrosserie', 'gamme', 'cod_cbr', 'lib_mrq', 'hybride']
-numerical_features = ['puiss_admin_98', 'puiss_max', 'ptcl', 'masse_ordma_min', 'masse_ordma_max']
+#'conso_urb','conso_exurb','conso_mixte','co_typ_1','nox','hcnox' sont exclues car issue de test après conception (comme notre variable cible)
 
-# Prepare the features and target
-feats = ademe_2014[categorical_features + numerical_features]
 target = ademe_2014['co2']
 
-# Split data into training and testing sets
+categorical_features_hors_hybride = ['Carrosserie', 'gamme', 'cod_cbr', 'lib_mrq']
+encoder_hybride = ['hybride']
+
+#categorical_features = categorical_features_hors_hybride + ordinal_encoder_hybride
+
+numerical_features = ['puiss_admin_98','puiss_max','ptcl','masse_ordma_min','masse_ordma_max']
+feats = ademe_2014[categorical_features_hors_hybride + encoder_hybride + numerical_features]
+
+# Split the data into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(feats, target, test_size=0.2, random_state=42)
 
-# Create a pipeline for preprocessing
-# 1. Handle categorical features
+
+
+# Création du pipeline de transformation et du modèle
+# 1. Traitement des colonnes catégorielles
+
+# on définit les encodeur pour pouvoir les injecter au choix dans la pipeline
+target_encoder_instance = ce.TargetEncoder(cols=categorical_features_hors_hybride)
+onehot_encoder_instance =  OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+
+#hybride est traité à part car 2 valeurs
+categorical_transformer_hybride = Pipeline(steps=[
+    ('cat_encoder_hybride', onehot_encoder_instance)])
+
 categorical_transformer = Pipeline(steps=[
-    ('onehot', ce.OneHotEncoder(use_cat_names=True, handle_unknown='ignore', handle_missing='value')), # Use category_encoders' OneHotEncoder
-    ('imputer_cat', SimpleImputer(strategy='most_frequent')) # Impute missing values in categorical features after OneHotEncoding
-])
+    ('cat_encoder', onehot_encoder_instance)])
 
-# 2. Handle numerical features
+# 2. Traitement des colonnes numériques
+
 numerical_transformer = Pipeline(steps=[
-    ('imputer_num', SimpleImputer(strategy='mean')),
-    ('scaler', StandardScaler())
-])
+    ('imputer', SimpleImputer(strategy='mean')),  # Remplacer les valeurs manquantes par la moyenne
+    ('scaler', StandardScaler())  ]) # Normalisation robuste
 
-# 3. Combine transformers using ColumnTransformer
+# preprocessing
 preprocessor = ColumnTransformer(
     transformers=[
-        ('cat', categorical_transformer, categorical_features),
+        ('cat', categorical_transformer, categorical_features_hors_hybride),
+        ('cat_hybride', categorical_transformer_hybride, encoder_hybride),
         ('num', numerical_transformer, numerical_features)
-    ])
+        ])
 
-# Create the GradientBoostingRegressor model
-@st.cache_resource
-def load_model():
-    # Charger un modèle ML ou en entraîner un
-    model = GradientBoostingRegressor()
-    return model
-    
-gbr = load_model()
+#  Gradient Boosting:   GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
+# GradientBoostingRegressor(n_estimators=500, learning_rate: = 0.2,  max_depth = 7,  min_samples_leaf =  1,  min_samples_split =  5, n_estimators = 50, subsample = 0)
 
-# Define the hyperparameter grid for GridSearchCV
-# Access the model parameters using 'model__' prefix
-param_grid = {
-    'model__n_estimators': [50],
-    'model__learning_rate': [0.01, 0.1, 0.2],
-    'model__max_depth': [3, 5, 7],
-    'model__min_samples_split': [2, 5, 10],
-    'model__min_samples_leaf': [1, 2, 4],
-    'model__subsample': [0.8, 0.9, 1.0],
-}
+modele = GradientBoostingRegressor(n_estimators=500, learning_rate = 0.2,  max_depth = 7,  min_samples_leaf =  1,  min_samples_split =  5, subsample = 0.8, random_state=42)
 
-# Create a pipeline with preprocessing and the model
-@st.cache_resource
-def load_pipeline(_gbr,_preprocessor):
-    model_pipeline = Pipeline(steps=[
-        ('preprocessor', preprocessor),
-        ('model', gbr)
-    ])
-    return model_pipeline
- 
-model_pipeline = load_pipeline(gbr,preprocessor)
+# 4. Pipeline complet avec préprocessing et modèle
+model_pipeline = Pipeline(steps=[
+    ('preprocessor', preprocessor),
+    ('model', modele) ])
 
-# Perform GridSearchCV to find the best hyperparameters
-@st.cache_resource
-def train_model():
-    grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
-    grid_search.fit(X_train, y_train)
-    return grid_search
+# Entraînement du modèle
+model_pipeline.fit(X_train, y_train)
 
-grid_search = train_model()
 
-#@st.cache_resource(ttl=6000)
-#def grid_search_cv(_model_pipeline,_param_grid, _X_train, _y_train):
-#    grid_search = GridSearchCV(estimator=model_pipeline, param_grid=param_grid, cv=5, n_jobs=-1, verbose=1, scoring='neg_mean_squared_error')
-#    grid_search.fit(X_train, y_train)
-#    return grid_search
-
-#grid_search = grid_search_cv(model_pipeline,param_grid,X_train,y_train)
-
-# Print the best parameters and evaluate the model
-y_pred = grid_search.best_estimator_.predict(X_test)
-mse = mean_squared_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
+# Prédictions et évaluation du modèle
+pred_test = model_pipeline.predict(X_test)
 
 st.subheader("Résultats")
 
-st.write(f"MSE : **{mse}**")
+
 st.write(f"r2 : **{r2}**")
+
+# Affichage des scores
+train_score = round(model_pipeline.score(X_train, y_train),3)
+st.write(f"Score sur le jeu d'entraînement: **{train_score}**")
+
+test_score = round(model_pipeline.score(X_test, y_test),3)
+st.write(f"Score sur le jeu de test: **{test_score}**")
+
+MSE =  round(mean_squared_error(y_test, pred_test),2)
+st.write(f"MSE : **{MSE}**")
+
+RMSE = round(math.sqrt(MSE),3)
+st.write(f"RMSE: **{RMSE}**")
+
+MAE = round(mean_absolute_error(y_test, pred_test),3)
+st.write(f"MAE: **{MAE}**")
+
+
+
 
 def result_graph(_y_pred, _y_test):
     fig = plt.figure(figsize = (18,5))
@@ -254,3 +283,30 @@ def result_graph(_y_pred, _y_test):
 fig_result = result_graph(y_pred,y_test)
 
 st.plotly_chart(fig_result, use_container_width=True)
+
+
+X_train_transformed = model_pipeline.named_steps['preprocessor'].transform(X_train)
+X_test_transformed = model_pipeline.named_steps['preprocessor'].transform(X_test)
+X_train_transformed = pd.DataFrame(X_train_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
+X_test_transformed = pd.DataFrame(X_test_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
+
+reg = modele
+reg.fit(X_train_transformed, y_train)
+
+def importance_graph(_reg)
+    fig = plt.figure(figsize = (10,10))
+    feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed.columns, columns=["Importance"])
+    feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
+
+    ax = fig.add_subplot(1,1,1)
+    ax.barh(y = feat_importances.index,width= feat_importances["Importance"] )
+    ax.set_title("Importance")
+    ax.set_xlabel("indicateur")
+    
+    return fig
+
+fig_importance = importance_graph(reg)
+
+st.plotly_chart(fig_importance, use_container_width=True)
+
+
