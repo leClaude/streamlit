@@ -293,7 +293,7 @@ st.dataframe(feat_importances.index)
 
 def importance_graph():
     fig = plt.figure(figsize = (10,10))
-    plt.barh(label=feat_importances.index, y=feat_importances['Importance'])
+    plt.barh(label=feat_importances.index, y=feat_importances.index, width= feat_importances["Importance"])
     return fig
 
 fig_importance = importance_graph()
