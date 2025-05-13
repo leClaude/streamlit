@@ -44,13 +44,6 @@ def load_data():
     return ademe_2014, europe_2014
     
 
-                                  
-
-
-
-
-
-    
 
 # Fonction pour générer le boxplot
 @st.cache_data
@@ -85,7 +78,7 @@ def generate_histogram(df_fr, df_eu):
 def generate_heatmap(ademe_2014):
     ademe_numerique=ademe_2014.select_dtypes(include=['number'])
     heatmap=ademe_numerique.corr()
-    fig=px.imshow(heatmap,
+    fig = px.imshow(heatmap,
               labels=dict(x="colonnes",y="lignes", color="valeur"),
               x=heatmap.columns,
               y=heatmap.index,
@@ -94,7 +87,6 @@ def generate_heatmap(ademe_2014):
     fig.update_layout(title= "Matrice de corrélation ADEME 2014",
                   coloraxis_colorbar=dict(title="Valeur", len=0.6),
                   width=800, height=800)
-    fig.show()
     return fig
 
 # Création du graphique plot
