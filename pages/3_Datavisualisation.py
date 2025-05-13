@@ -142,7 +142,7 @@ def generate_distribution_plots(df_fr):
     carrosserie_autres["Autres"]=carrosserie_autres[~carrosserie_autres.index.isin(['BERLINE', 'MINIBUS','BREAK','TS TERRAINS/CHEMINS'])].sum()
     carrosserie_autres=carrosserie_autres.loc[['BERLINE', 'MINIBUS','BREAK','TS TERRAINS/CHEMINS','Autres']]
 
-    fig=make_subplots(rows=1, cols=2, subplot_titles=["Répartition des constructeurs (ADEME 2014)", "Répartition des différentes carrosseries (ADEME 2014)"],specs=[[{"type":"domain"},{"type":"domain"}]])
+    fig=make_subplots(rows=1, cols=2, subplot_titles=["Constructeurs", "Carrosseries)"],specs=[[{"type":"domain"},{"type":"domain"}]])
 
     constructeurs_df = pd.DataFrame({'Constructeur': constructeurs_autres.index, 'Nombre': constructeurs_autres.values})
 
