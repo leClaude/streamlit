@@ -238,9 +238,6 @@ pred_test = model_pipeline.predict(X_test)
 
 st.subheader("Résultats")
 
-
-st.write(f"r2 : **{r2}**")
-
 # Affichage des scores
 train_score = round(model_pipeline.score(X_train, y_train),3)
 st.write(f"Score sur le jeu d'entraînement: **{train_score}**")
