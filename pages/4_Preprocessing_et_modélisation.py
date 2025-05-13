@@ -298,7 +298,7 @@ def importance_graph(_reg,_feat_importances):
     ax.set_title("Importance")
     ax.set_xlabel("indicateur")
     
-    return fig
+    return ax
 
 fig_importance = importance_graph(reg, X_train_transformed_2)
 
