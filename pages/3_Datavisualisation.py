@@ -128,31 +128,35 @@ def generate_plot(ademe_2014):
     return fig
 
 def generate_distribution_plots(df_fr):
-    fig, axes = plt.subplots(1,2,figsize=(15, 15))
-    plt.subplots_adjust(wspace=1)
-
     # Répartition des constructeurs dans le dataset ADEME
     constructeurs = df_fr["lib_mrq"].value_counts()
     constructeurs_autres = constructeurs.copy()
     constructeurs_autres["Autres"] = constructeurs_autres[~constructeurs_autres.index.isin(['MERCEDES', 'VOLKSWAGEN'])].sum()
-    constructeurs_autres = constructeurs_autres.loc[['MERCEDES', 'VOLKSWAGEN', "Autres"]]
-
-    # Création du camembert pour les constructeurs
-    colors = sns.color_palette('Set2')
-    axes[0].pie(constructeurs_autres, labels=constructeurs_autres.index, autopct='%1.1f%%', colors=colors, startangle=90)
-    axes[0].set_title("Répartition des constructeurs (ADEME 2014)")
-
+    constructeurs_autres = constructeurs_autres.loc[['MERCEDES', 'VOLKSWAGEN',"Autres"]]
+    
     # Répartition des carrosseries (Ademe)
-    carrosserie = df_fr['Carrosserie'].value_counts()
-    carrosserie_autres = carrosserie.copy()
-    carrosserie_autres["Autres"] = carrosserie_autres[~carrosserie_autres.index.isin(['BERLINE', 'MINIBUS', 'BREAK', 'TS TERRAINS/CHEMINS'])].sum()
-    carrosserie_autres = carrosserie_autres.loc[['BERLINE', 'MINIBUS', 'BREAK', 'TS TERRAINS/CHEMINS', 'Autres']]
+    carrosserie=ademe_2014['Carrosserie'].value_counts()
+    carrosserie_autres=carrosserie.copy()
+    carrosserie_autres["Autres"]=carrosserie_autres[~carrosserie_autres.index.isin(['BERLINE', 'MINIBUS','BREAK','TS TERRAINS/CHEMINS'])].sum()
+    carrosserie_autres=carrosserie_autres.loc[['BERLINE', 'MINIBUS','BREAK','TS TERRAINS/CHEMINS','Autres']]
 
-    # Création du camembert pour les carrosseries
-    colors2 = sns.color_palette('Set3')
-    axes[1].pie(carrosserie_autres, labels=carrosserie_autres.index, autopct='%1.1f%%', pctdistance=0.85, colors=('#fc8d62', '#66c2a5', '#e78ac3', '#a6d854', '#8da0cb'), startangle=45)
-    axes[1].set_title('Répartition des différentes carrosseries (ADEME 2014)')
-    plt.show()
+    fig=make_subplots(rows=1, cols=2, subplot_titles=["Répartition des constructeurs (ADEME 2014)", "Répartition des différentes carrosseries (ADEME 2014)"],specs=[[{"type":"domain"},{"type":"domain"}]])
+
+    constructeurs_df = pd.DataFrame({'Constructeur': constructeurs_autres.index, 'Nombre': constructeurs_autres.values})
+
+    # Ajout du premier camembert (Constructeurs)
+    fig.add_trace(go.Pie(labels=constructeurs_df['Constructeur'], values=constructeurs_df['Nombre'],
+                     name="Constructeurs", marker=dict(colors=px.colors.qualitative.Set2, line=dict(color='white', width=1)),
+                     textinfo='label+percent'), row=1, col=1)
+
+    # Création du DataFrame
+    carrosserie_df = pd.DataFrame({'Carrosserie': carrosserie_autres.index, 'Nombre': carrosserie_autres.values})
+
+    # Ajout du deuxième camembert (Carrosseries)
+    fig.add_trace(go.Pie(labels=carrosserie_df['Carrosserie'], values=carrosserie_df['Nombre'],
+                     name="Carrosseries", marker=dict(colors=['#fc8d62','#66c2a5','#e78ac3','#a6d854','#8da0cb'], line=dict(color='white', width=1)),
+                     textinfo='label+percent'), row=1, col=2)
+
     return fig
 
 def show():
@@ -217,7 +221,7 @@ def show():
     
     st.markdown("""
     On remarque une corrélation linéaire forte entre la consommation de carburant et les émissions de CO2. 
-    Cette corrélation est attendue puisque la combustion du carburant entraîne directement la production de CO2.
+    Cette corrélation est attendue puisque la combustion du carburant entraîne directement la production de CO2, et que chaque carburant n'a ni la même concentration en carbone ni la même densité.
                 """)
                 
     st.subheader("Répartition des entrées par constructeur et carrosserie du dataset ADEME")
