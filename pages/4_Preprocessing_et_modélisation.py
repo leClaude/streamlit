@@ -293,17 +293,17 @@ feat_importances = pd.Series(importances, index=feature_names)
 
 top_features = feat_importances.sort_values(ascending=False).head(10)
 
-def importance_graph():
+def importance_graph(_top_features):
     fig = plt.figure(figsize=(10, 8))
     top_features.plot(kind='barh', color='skyblue')
     plt.gca().invert_yaxis()
-    plt.title("Top 10 des variables les plus importantes (Random Forest)")
+    plt.title("Top 10 des variables les plus importantes (GradientBoosting) ADEME")
     plt.xlabel("Importance")
     plt.grid(axis='x')
     plt.tight_layout()
     return fig
 
-fig_importance = importance_graph()
+fig_importance = importance_graph(top_features)
 
 st.plotly_chart(fig_importance, use_container_width=True)
 
