@@ -261,7 +261,8 @@ st.write(f"MAE: **{MAE}**")
 
 
 def result_graph(_pred_test, _y_test):
-    fig = plt.scatter(pred_test, y_test, c='green')
+    fig = plt.figure(figsize=(10,10))
+    plt.scatter(pred_test, y_test, c='green')
     plt.plot((y_test.min(), y_test.max()), (y_test.min(), y_test.max()), color = 'red')
     plt.xlabel("prediction")
     plt.ylabel("vrai valeur")
