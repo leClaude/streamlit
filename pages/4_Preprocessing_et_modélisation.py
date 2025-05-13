@@ -289,11 +289,11 @@ feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transfor
 feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
 feat_importances = feat_importances.head(10)
 
-st.dataframe(feat_importances.index)
+st.dataframe(feat_importances)
 
 def importance_graph():
     fig = plt.figure(figsize = (10,10))
-    plt.barh(y=feat_importances.index, width= feat_importances["Importance"], tick_label=feat_importances.index)
+    plt.barh(y=feat_importances.index.toList(), width= feat_importances["Importance"], tick_label=feat_importances.index)
     return fig
 
 fig_importance = importance_graph()
