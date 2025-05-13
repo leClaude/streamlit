@@ -286,7 +286,7 @@ def train_importance(_X_train_transformed, _y_train):
 reg = train_importance(X_train_transformed_2, y_train)
 
 feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed_2.columns, columns=["Importance"])
-feat_importances.set_index(df.columns[0], inplace=True)
+feat_importances.set_index(feat_importances.columns[0], inplace=True)
 feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
 
 st.dataframe(feat_importances)
