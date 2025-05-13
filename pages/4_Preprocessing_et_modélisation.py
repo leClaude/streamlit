@@ -291,12 +291,11 @@ feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
 st.dataframe(feat_importances)
 
 def importance_graph(_reg,_feat_importances):
-    fig = plt.figure(figsize = (10,10))
-
-    fig.add_subplot(1,1,1)
-    barh(y = feat_importances.index,width= feat_importances["Importance"] )
-    set_title("Importance")
-    set_xlabel("indicateur")
+    fig, ax = plt.subplots()
+    
+    ax.barh(y = feat_importances.index,width= feat_importances["Importance"] )
+    ax.set_title("Importance")
+    ax.set_xlabel("indicateur")
     
     return fig
 
