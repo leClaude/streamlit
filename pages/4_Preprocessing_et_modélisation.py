@@ -286,7 +286,7 @@ def train_importance(_X_train_transformed, _y_train):
 reg = train_importance(X_train_transformed_2, y_train)
 
 def importance_graph(_reg,_X_train_transformed):
-    fig = plt.figure(figsize = (5,10))
+    fig = plt.figure(figsize = (10,10))
     feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed.columns, columns=["Importance"])
     feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
 
