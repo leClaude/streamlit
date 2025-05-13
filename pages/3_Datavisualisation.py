@@ -84,9 +84,9 @@ def generate_heatmap(ademe_2014):
               y=heatmap.index,
               color_continuous_scale="viridis",
               text_auto=".2f")
-    fig.update_layout(title= "Matrice de corrélation ADEME 2014",
-                  coloraxis_colorbar=dict(title="Valeur", len=0.6),
-                  width=800, height=800)
+    #fig.update_layout(title= "Matrice de corrélation ADEME 2014",
+    #              coloraxis_colorbar=dict(title="Valeur", len=0.6),
+    #              width=800, height=800)
     return fig
 
 # Création du graphique plot
