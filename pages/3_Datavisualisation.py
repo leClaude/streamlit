@@ -135,7 +135,7 @@ def generate_distribution_plots(df_fr):
     constructeurs_autres = constructeurs_autres.loc[['MERCEDES', 'VOLKSWAGEN',"Autres"]]
     
     # Répartition des carrosseries (Ademe)
-    carrosserie=ademe_2014['Carrosserie'].value_counts()
+    carrosserie=df_fr['Carrosserie'].value_counts()
     carrosserie_autres=carrosserie.copy()
     carrosserie_autres["Autres"]=carrosserie_autres[~carrosserie_autres.index.isin(['BERLINE', 'MINIBUS','BREAK','TS TERRAINS/CHEMINS'])].sum()
     carrosserie_autres=carrosserie_autres.loc[['BERLINE', 'MINIBUS','BREAK','TS TERRAINS/CHEMINS','Autres']]
