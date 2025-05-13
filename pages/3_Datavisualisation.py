@@ -109,15 +109,22 @@ def generate_plot(ademe_2014):
 
     ademe_2014['cod_cbr_grouped'] = ademe_2014['cod_cbr'].replace(mapping)
     
-    fig = plt.figure(figsize=(12, 8))
-    sns.set_style("whitegrid")
-    sns.scatterplot(x='Consommation mixte (l/100km)', y='Co2 (g/km)', hue='cod_cbr_grouped', data=ademe_2014,alpha=0.7,s=80, palette='deep')
-    plt.xlabel("Consommation mixte de carburant (en l/100km)")
-    plt.ylabel("Emission de CO2 (en g/km)")
-    plt.legend(title="Type de carburant")
-    plt.title("Émissions de CO2 en fonction de la consommation et du carburant selon l'Ademe 2014")
-    plt.legend(title='Type de carburant')
-    plt.show()
+    fig = px.scatter(
+    ademe_2014,
+    x="Consommation mixte (l/100km)",
+    y="Co2 (g/km)",
+    color="cod_cbr_grouped",  # Utilisation de la variable regroupée
+    title="Relation entre consommation et émissions de CO2",
+    labels={"Consommation mixte (l/100km)": "Consommation mixte (l/100km)", "Co2 (g/km)": "Émissions de CO2 (g/km)"},
+    color_discrete_sequence=px.colors.qualitative.Set2,  # Palette de couleurs plus lisible
+    hover_data=["cod_cbr"])
+
+    fig.update_layout(
+    xaxis_title="Consommation mixte de carburant (en l/100km)",
+    yaxis_title="Émission de CO2 (en g/km)",
+    legend_title="Type de carburant",
+    template="plotly_white")
+    
     return fig
 
 def generate_distribution_plots(df_fr):
@@ -206,7 +213,7 @@ def show():
     fig_plot = generate_plot(df_fr)
     
     #Affichage du graphe CO2 vs conso
-    st.pyplot(fig_plot)
+    st.plotly_chart(fig_plot)
     
     st.markdown("""
     On remarque une corrélation linéaire forte entre la consommation de carburant et les émissions de CO2. 
