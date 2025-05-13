@@ -84,9 +84,9 @@ def generate_heatmap(ademe_2014):
               y=heatmap.index,
               color_continuous_scale="viridis",
               text_auto=".2f")
-    #fig.update_layout(title= "Matrice de corrélation ADEME 2014",
-    #              coloraxis_colorbar=dict(title="Valeur", len=0.6),
-    #              width=800, height=800)
+    fig.update_layout(title= "Matrice de corrélation ADEME 2014",
+                  coloraxis_colorbar=dict(title="Valeur", len=0.6),
+                  width=800, height=800)
     return fig
 
 # Création du graphique plot
@@ -191,10 +191,10 @@ def show():
     
     st.subheader("Matrice de correlation du dataset ADEME")
     #Générer la heatmap
-    #fig_heatmap = generate_heatmap(df_fr)
+    fig_heatmap = generate_heatmap(df_fr)
     
     #Affichage de la heatmap
-    st.pyplot(generate_heatmap(df_fr))
+    st.plotly_chart(fig_heatmap)
     
     st.markdown("""
     On remarque une forte corrélation entre les émissions de CO2 et la consommation des véhicules (<0.97). Plus un véhicule consomme de carburant, plus celui-ci émet de CO2. 
