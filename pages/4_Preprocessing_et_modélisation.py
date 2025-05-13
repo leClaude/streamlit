@@ -277,8 +277,13 @@ X_test_transformed = model_pipeline.named_steps['preprocessor'].transform(X_test
 X_train_transformed = pd.DataFrame(X_train_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
 X_test_transformed = pd.DataFrame(X_test_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
 
-reg = GradientBoostingRegressor(n_estimators=500, learning_rate = 0.2,  max_depth = 7,  min_samples_leaf =  1,  min_samples_split =  5, subsample = 0.8, random_state=42)
-reg.fit(X_train_transformed, y_train)
+@st.cache_data
+def train_importance(_X_train_transformed, _y_train):
+    mod = GradientBoostingRegressor(n_estimators=500, learning_rate = 0.2,  max_depth = 7,  min_samples_leaf =  1,  min_samples_split =  5, subsample = 0.8, random_state=42)
+    mod.fit(X_train_transformed, y_train)
+    return mod
+
+reg = train_importance(X_train_transformed, y_train)
 
 def importance_graph(_reg):
     fig = plt.figure(figsize = (10,10))
