@@ -264,7 +264,7 @@ def result_graph(_pred_test, _y_test):
     plt.plot((y_test.min(), y_test.max()), (y_test.min(), y_test.max()), color = 'red')
     plt.xlabel("prediction")
     plt.ylabel("vrai valeur")
-    plt.title(str(modele) + 'pour la prédiction')
+    plt.title('GradientBoostingRegressor pour la prédiction')
     return fig
 
 fig_result = result_graph(pred_test,y_test)
