@@ -265,7 +265,7 @@ def result_graph(_pred_test, _y_test):
     plt.title(str(modele) + 'pour la prédiction')
     return fig
 
-fig_result = result_graph(y_pred,y_test)
+fig_result = result_graph(pred_test,y_test)
 
 st.plotly_chart(fig_result, use_container_width=True)
 
