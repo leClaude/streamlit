@@ -72,7 +72,7 @@ def generate_histogram(df_fr, df_eu):
     
     # Histogramme pour ADEME 2014
     sns.histplot(df_fr['Co2 (g/km)'], bins=30, kde=False, color="#fde725", alpha=0.6, label="Ademe 2014")
-    
+    plt.show()
     # Titre et labels
     #axes[0].set_title("Histogramme des émissions de CO2")
     #axes[0].set_xlabel("Émissions de CO2 (g/km)")
@@ -90,6 +90,7 @@ def generate_heatmap(ademe_2014):
     fig =  plt.figure(figsize=(8,6))
     sns.heatmap(heatmap,cmap="viridis",annot=True, fmt=".2f", linewidths=0.5, linecolor="gray", cbar=True)
     plt.title('Matrice de corrélation ADEME 2014')
+    plt.show()
     return fig
 
 # Création du graphique plot
@@ -120,6 +121,7 @@ def generate_plot(ademe_2014):
     plt.legend(title="Type de carburant")
     plt.title("Émissions de CO2 en fonction de la consommation et du carburant selon l'Ademe 2014")
     plt.legend(title='Type de carburant')
+    plt.show()
     return fig
 
 def generate_distribution_plots(df_fr):
@@ -147,7 +149,7 @@ def generate_distribution_plots(df_fr):
     colors2 = sns.color_palette('Set3')
     axes[1].pie(carrosserie_autres, labels=carrosserie_autres.index, autopct='%1.1f%%', pctdistance=0.85, colors=('#fc8d62', '#66c2a5', '#e78ac3', '#a6d854', '#8da0cb'), startangle=45)
     axes[1].set_title('Répartition des différentes carrosseries (ADEME 2014)')
-
+    plt.show()
     return fig
 
 def show():
