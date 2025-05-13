@@ -292,9 +292,7 @@ st.dataframe(feat_importances)
 
 def importance_graph():
     fig = plt.figure(figsize = (10,10))
-    feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed.columns, columns=["Importance"])
-    feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
-
+    
     ax = fig.add_subplot(1,1,1)
     ax.barh(y = feat_importances.index,width= feat_importances["Importance"] )
     ax.set_title("Importance")
