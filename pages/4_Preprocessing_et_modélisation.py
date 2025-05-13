@@ -293,3 +293,15 @@ feature_names = model_pipeline.named_steps['preprocessor'].get_feature_names_out
 
 st.dataframe(feat_importances)
 
+def importance_graph():
+    fig = plt.figure(figsize = (10,10))
+    plt.barh(feat_importances.index, feat_importances['Importance'])
+    plt.title("Importance")
+    plt.gca().invert_yaxis()  # Inverse l'axe Y pour avoir la bonne orientation
+    plt.xlabel("indicateur")
+    plt.show()
+    return fig
+
+importance = importance_graph()
+
+st.pyplot(importance)
