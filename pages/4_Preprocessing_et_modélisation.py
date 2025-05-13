@@ -285,9 +285,9 @@ def train_importance(_X_train_transformed, _y_train):
 
 reg = train_importance(X_train_transformed_2, y_train)
 
-def importance_graph(_reg,_X_train_transformed):
+def importance_graph(_reg,_X_train_transformed_2):
     fig = plt.figure(figsize = (10,10))
-    feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed.columns, columns=["Importance"])
+    feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed_2.columns, columns=["Importance"])
     feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
 
     ax = fig.add_subplot(1,1,1)
