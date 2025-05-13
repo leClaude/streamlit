@@ -277,7 +277,7 @@ X_test_transformed = model_pipeline.named_steps['preprocessor'].transform(X_test
 X_train_transformed = pd.DataFrame(X_train_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
 X_test_transformed = pd.DataFrame(X_test_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
 
-reg = modele
+reg = model_pipeline
 reg.fit(X_train_transformed, y_train)
 
 def importance_graph(_reg):
