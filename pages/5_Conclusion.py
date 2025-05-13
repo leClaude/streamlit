@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 
-df_results = pd.read_csv("data/resultats_modelisation.csv", encoding="latin1", sep=",")
+df_results = pd.read_excel("data/modélisation.xlsx")
 st.title("Conclusion")
 
 st.subheader("Résultats des modélisation")
