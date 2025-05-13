@@ -292,11 +292,10 @@ st.dataframe(feat_importances)
 
 def importance_graph():
     fig = plt.figure(figsize = (10,10))
-    
-    ax = fig.add_subplot(1,1,1)
-    ax.barh(y = feat_importances.index,width= feat_importances["Importance"] )
-    ax.set_title("Importance")
-    ax.set_xlabel("indicateur")
+    plt.barh(feat_importances.index, feat_importances['Importance'])
+    plt.title("Importance")
+    plt.ylabel(feat_importances.index)
+    plt.xlabel("indicateur")
     
     return fig
 
