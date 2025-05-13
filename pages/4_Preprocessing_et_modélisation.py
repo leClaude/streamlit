@@ -281,7 +281,7 @@ X_test_transformed = pd.DataFrame(X_test_transformed, columns=model_pipeline.nam
 reg = modele
 reg.fit(X_train_transformed, y_train)
 
-def importance_graph(_reg)
+def importance_graph(_reg):
     fig = plt.figure(figsize = (10,10))
     feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed.columns, columns=["Importance"])
     feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
