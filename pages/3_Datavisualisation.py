@@ -5,6 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 
 # Chargement des datasets
 @st.cache_data
