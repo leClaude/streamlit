@@ -286,7 +286,6 @@ def train_importance(_X_train_transformed, _y_train):
 reg = train_importance(X_train_transformed_2, y_train)
 
 feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed_2.columns, columns=["Importance"])
-feat_importances.set_index(feat_importances.columns[0], inplace=True)
 feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
 
 st.dataframe(feat_importances)
@@ -297,6 +296,7 @@ def importance_graph(_reg,_feat_importances):
     ax.barh(y = feat_importances.index,width= feat_importances["Importance"] )
     ax.set_title("Importance")
     ax.set_xlabel("indicateur")
+    ax.set_ylabel(feat_importances.index)
     
     return fig
 
