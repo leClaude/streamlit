@@ -1,7 +1,7 @@
 # Accueil
 import streamlit as st
 
-st.image("data/datascientest.jpg", caption="datascientest", use_column_width=True)
+st.image("data/datascientest.jpg", caption="datascientest", use_container_width=True)
 
 st.title("Projet Emission de CO2")
 
