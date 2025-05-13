@@ -259,7 +259,7 @@ st.write(f"MAE: **{MAE}**")
 
 
 def result_graph(_pred_test, _y_test):
-    fig = plt.figure(figsize=(10,10))
+    fig = plt.figure(figsize=(18,10))
     plt.scatter(pred_test, y_test, c='green')
     plt.plot((y_test.min(), y_test.max()), (y_test.min(), y_test.max()), color = 'red')
     plt.xlabel("prediction")
@@ -285,7 +285,7 @@ def train_importance(_X_train_transformed, _y_train):
 
 reg = train_importance(X_train_transformed, y_train)
 
-def importance_graph(_reg):
+def importance_graph(_reg,_X_train_transformed):
     fig = plt.figure(figsize = (10,10))
     feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed.columns, columns=["Importance"])
     feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
@@ -297,7 +297,7 @@ def importance_graph(_reg):
     
     return fig
 
-fig_importance = importance_graph(reg)
+fig_importance = importance_graph(reg, X_train_transformed)
 
 st.plotly_chart(fig_importance, use_container_width=True)
 
