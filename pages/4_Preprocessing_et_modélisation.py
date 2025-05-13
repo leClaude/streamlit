@@ -230,8 +230,11 @@ model_pipeline = Pipeline(steps=[
     ('model', modele) ])
 
 # Entraînement du modèle
-model_pipeline.fit(X_train, y_train)
+@st.cache_data
+def train_model(_modele_pipeline, _X_train, _y_train):
+    model_pipeline.fit(X_train, y_train)
 
+train_model(modele_pipeline, X_train, y_train)
 
 # Prédictions et évaluation du modèle
 pred_test = model_pipeline.predict(X_test)
@@ -258,7 +261,7 @@ st.write(f"MAE: **{MAE}**")
 
 
 def result_graph(_pred_test, _y_test):
-    plt.scatter(pred_test, y_test, c='green')
+    fig = plt.scatter(pred_test, y_test, c='green')
     plt.plot((y_test.min(), y_test.max()), (y_test.min(), y_test.max()), color = 'red')
     plt.xlabel("prediction")
     plt.ylabel("vrai valeur")
