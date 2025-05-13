@@ -1,11 +1,13 @@
 # Modélisation
 import streamlit as st
+import pandas as pd
 
+df_results = pd.read_csv("data/resultats_modelisation.csv")
 st.title("Conclusion")
 
 st.subheader("Résultats des modélisation")
 
-st.image("data/results.jpg", caption="Une belle image", use_container_width=True)
+st.dataframe(df_results)
 
 st.subheader("Conclusion")
 
