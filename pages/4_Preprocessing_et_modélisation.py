@@ -297,6 +297,7 @@ def importance_graph(_reg,_feat_importances):
     ax.set_title("Importance")
     ax.set_xlabel("indicateur")
     ax.set_yticks(feat_importances.index, labels=feat_importances.index)
+    ax.invert_yaxis() 
     
     return fig
 
