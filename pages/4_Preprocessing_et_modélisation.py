@@ -163,18 +163,6 @@ print("RMSE: ",  round(math.sqrt(MSE),3))
 from sklearn.metrics import mean_absolute_error
 print("MAE: ",  round(mean_absolute_error(y_test, pred_test),3))
 
-
-
-import matplotlib.pyplot as plt
-fig = plt.figure(figsize = (10,10))
-plt.scatter(pred_test, y_test, c='green')
-plt.plot((y_test.min(), y_test.max()), (y_test.min(), y_test.max()), color = 'red')
-plt.xlabel("prediction")
-plt.ylabel("vrai valeur")
-plt.title(str(modele) + 'pour la prédiction')
-plt.show()
-
-
 X_train_transformed = model_pipeline.named_steps['preprocessor'].transform(X_train)
 X_test_transformed = model_pipeline.named_steps['preprocessor'].transform(X_test)
 X_train_transformed = pd.DataFrame(X_train_transformed, columns=model_pipeline.named_steps['preprocessor'].get_feature_names_out())
