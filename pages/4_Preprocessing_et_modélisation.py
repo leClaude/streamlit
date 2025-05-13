@@ -285,16 +285,22 @@ def train_importance(_X_train_transformed, _y_train):
 
 reg = train_importance(X_train_transformed_2, y_train)
 
-feat_importances = pd.DataFrame(reg.feature_importances_, columns=["Importance"])
-feat_importances.set_index(X_train_transformed_2.columns, inplace=True)
-feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
-feat_importances = feat_importances.head(10)
+feature_names = model_pipeline.named_steps['preprocessor'].get_feature_names_out()
 
-st.dataframe(feat_importances)
-'''
-def importance_graph():
-    fig = plt.figure(figsize = (10,10))
-    plt.barh(y=feat_importances.index.tolist(), width= feat_importances["Importance"], tick_label=feat_importances.index)
+importances = model_pipeline.named_steps['model'].feature_importances_
+
+feat_importances = pd.Series(importances, index=feature_names)
+
+top_features = feat_importances.sort_values(ascending=False).head(10)
+
+def importance_graph()
+    fig = plt.figure(figsize=(10, 8))
+    top_features.plot(kind='barh', color='skyblue')
+    plt.gca().invert_yaxis()
+    plt.title("Top 10 des variables les plus importantes (Random Forest)")
+    plt.xlabel("Importance")
+    plt.grid(axis='x')
+    plt.tight_layout()
     return fig
 
 fig_importance = importance_graph()
