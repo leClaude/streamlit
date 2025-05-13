@@ -231,10 +231,10 @@ model_pipeline = Pipeline(steps=[
 
 # Entraînement du modèle
 @st.cache_data
-def train_model(_modele_pipeline, _X_train, _y_train):
+def train_model(_model_pipeline, _X_train, _y_train):
     model_pipeline.fit(X_train, y_train)
 
-train_model(modele_pipeline, X_train, y_train)
+train_model(model_pipeline, X_train, y_train)
 
 # Prédictions et évaluation du modèle
 pred_test = model_pipeline.predict(X_test)
