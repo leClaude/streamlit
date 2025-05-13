@@ -297,7 +297,7 @@ def importance_graph(_reg,_X_train_transformed):
     
     return fig
 
-fig_importance = importance_graph(reg, X_train_transformed)
+fig_importance = importance_graph(reg, X_train_transformed_2)
 
 st.plotly_chart(fig_importance, use_container_width=True)
 
