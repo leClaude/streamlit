@@ -293,7 +293,7 @@ feat_importances = pd.Series(importances, index=feature_names)
 
 top_features = feat_importances.sort_values(ascending=False).head(10)
 
-def importance_graph()
+def importance_graph():
     fig = plt.figure(figsize=(10, 8))
     top_features.plot(kind='barh', color='skyblue')
     plt.gca().invert_yaxis()
