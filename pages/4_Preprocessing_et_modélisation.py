@@ -287,18 +287,13 @@ reg = train_importance(X_train_transformed_2, y_train)
 
 feat_importances = pd.DataFrame(reg.feature_importances_, index=X_train_transformed_2.columns, columns=["Importance"])
 feat_importances.sort_values(by='Importance', ascending=False, inplace=True)
+feat_importances = feat_importances.head(10)
 
 st.dataframe(feat_importances.index)
 
 def importance_graph():
     fig = plt.figure(figsize = (10,10))
     plt.barh(feat_importances.index, feat_importances['Importance'])
-    plt.title("Importance")
-    plt.yticks(ticks=feat_importances.index,labels=feat_importances.index)
-    #plt.gca().invert_yaxis()  # Inverse l'axe Y pour avoir la bonne orientation
-    #plt.xticks(rotation=90, ha="center") 
-    plt.xlabel("indicateur")
-    
     return fig
 
 fig_importance = importance_graph()
