@@ -294,7 +294,7 @@ def importance_graph():
     fig = plt.figure(figsize = (10,10))
     plt.barh(feat_importances.index, feat_importances['Importance'])
     plt.title("Importance")
-    plt.yticks(labels=feat_importances.index)
+    plt.yticks(ticks=feat_importances.index,labels=feat_importances.index)
     plt.gca().invert_yaxis()  # Inverse l'axe Y pour avoir la bonne orientation
     plt.xticks(rotation=90, ha="center") 
     plt.xlabel("indicateur")
