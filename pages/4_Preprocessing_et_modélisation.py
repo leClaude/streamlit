@@ -211,30 +211,28 @@ numerical_transformer = Pipeline(steps=[
     ('imputer', SimpleImputer(strategy='mean')),  # Remplacer les valeurs manquantes par la moyenne
     ('scaler', StandardScaler())  ]) # Normalisation robuste
 
-# preprocessing
-preprocessor = ColumnTransformer(
+
+# 4. Pipeline complet avec préprocessing et modèle
+
+
+# Entraînement du modèle
+@st.cache_data
+def train_model(_X_train, _y_train):
+    # preprocessing
+    preprocessor = ColumnTransformer(
     transformers=[
         ('cat', categorical_transformer, categorical_features_hors_hybride),
         ('cat_hybride', categorical_transformer_hybride, encoder_hybride),
         ('num', numerical_transformer, numerical_features)
         ])
-
-#  Gradient Boosting:   GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
-# GradientBoostingRegressor(n_estimators=500, learning_rate: = 0.2,  max_depth = 7,  min_samples_leaf =  1,  min_samples_split =  5, n_estimators = 50, subsample = 0)
-
-modele = GradientBoostingRegressor(n_estimators=500, learning_rate = 0.2,  max_depth = 7,  min_samples_leaf =  1,  min_samples_split =  5, subsample = 0.8, random_state=42)
-
-# 4. Pipeline complet avec préprocessing et modèle
-model_pipeline = Pipeline(steps=[
+    modele = GradientBoostingRegressor(n_estimators=500, learning_rate = 0.2,  max_depth = 7,  min_samples_leaf =  1,  min_samples_split =  5, subsample = 0.8, random_state=42)
+    mp = Pipeline(steps=[
     ('preprocessor', preprocessor),
     ('model', modele) ])
+    mp.fit(X_train, y_train)
+    return mp
 
-# Entraînement du modèle
-@st.cache_data
-def train_model(_model_pipeline, _X_train, _y_train):
-    model_pipeline.fit(X_train, y_train)
-
-train_model(model_pipeline, X_train, y_train)
+model_pipeline = train_model(X_train, y_train)
 
 # Prédictions et évaluation du modèle
 pred_test = model_pipeline.predict(X_test)
