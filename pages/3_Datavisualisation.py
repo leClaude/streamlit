@@ -83,14 +83,18 @@ def generate_histogram(df_fr, df_eu):
 
 # Fonction pour générer la matrice de corrélation ademe 2014
 def generate_heatmap(ademe_2014):
-    # Sélectionner les variables numériques
     ademe_numerique=ademe_2014.select_dtypes(include=['number'])
-    ademe_numerique=ademe_numerique.drop(['Consommation extra urbaine (l/100km)','hcnox'], axis=1)
     heatmap=ademe_numerique.corr()
-    fig =  plt.figure(figsize=(8,6))
-    sns.heatmap(heatmap,cmap="viridis",annot=True, fmt=".2f", linewidths=0.5, linecolor="gray", cbar=True)
-    plt.title('Matrice de corrélation ADEME 2014')
-    plt.show()
+    fig=px.imshow(heatmap,
+              labels=dict(x="colonnes",y="lignes", color="valeur"),
+              x=heatmap.columns,
+              y=heatmap.index,
+              color_continuous_scale="viridis",
+              text_auto=".2f")
+    fig.update_layout(title= "Matrice de corrélation ADEME 2014",
+                  coloraxis_colorbar=dict(title="Valeur", len=0.6),
+                  width=800, height=800)
+    fig.show()
     return fig
 
 # Création du graphique plot
