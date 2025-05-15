@@ -26,7 +26,7 @@ else:
     df = df_europe.copy()
 
 st.subheader("Aperçu des données")
-st.dataframe(df.head())
+st.dataframe(df.head(15))
 
 #Présentation de la source
     
