@@ -1,14 +1,8 @@
 # Modélisation
 import streamlit as st
 import pandas as pd
-import openpyxl
 
-df_results = pd.read_excel("data/modélisation.xlsx", sheet_name='ademe2014', header=0)
 st.title("Conclusion")
-
-st.subheader("Résultats des modélisation")
-
-st.dataframe(df_results)
 
 st.subheader("Conclusion")
 
@@ -27,3 +21,5 @@ st.markdown("""
     la masse, la puissance, la cylindrée ou encore le type de carburant des véhicules qui
     prédominent.
     """)
+
+st.subheader("Perspectives")

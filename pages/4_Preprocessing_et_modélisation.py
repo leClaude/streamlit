@@ -16,6 +16,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import math
+import openpyxl
 
 st.title("Preprocessing et modélisation")
 
@@ -305,3 +306,9 @@ def importance_graph():
 importance = importance_graph()
 
 st.pyplot(importance)
+
+st.subheader("Résultats des différentes modélisation")
+
+df_results = pd.read_excel("data/modélisation.xlsx", sheet_name='ademe2014', header=0)
+
+st.dataframe(df_results)
