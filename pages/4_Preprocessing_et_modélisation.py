@@ -20,7 +20,6 @@ import openpyxl
 
 st.title("Preprocessing et modélisation")
 
-st.subheader("Preprocessing Ademe 2014")
 
 st.image("data/mod_1.JPG",use_container_width=True, caption="preprocessing")
 
@@ -59,7 +58,6 @@ ademe_2014 = ademe_2014.replace({'EE' : 'essence / électrique (rechargeable)', 
 'GN' : 'monocarburation Gaz Naturel Véhicule – GNV', 'GN/ES' : 'bicarburation essence / Gaz Naturel Véhicule – GNV (données consommations GNV)', 'GO' : 'gazole', 'GP/ES' : 'bicarburation essence / Gaz de Pétrole Liquéfié – GPL (données consommations GPL)',
 'H2' : 'hydrogène'})
 
-st.subheader("Modelisation Ademe 2014 : GradientBoostingRegressor")
 
 st.image("data/mod_2.JPG",use_container_width=True, caption="modelisation")
 
