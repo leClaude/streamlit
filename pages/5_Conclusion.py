@@ -1,10 +1,8 @@
 # Modélisation
 import streamlit as st
-import pandas as pd
 
 st.title("Conclusion")
 
-st.subheader("Conclusion")
 
 st.markdown("""
     Notre objectif était d’identifier les principaux facteurs influençant les émissions de CO₂ des véhicules, à l’aide de modèles de machine learning appliqués à deux jeux de données : celui de l’ADEME pour le marché français, et celui de l’Agence Européenne de l’Environnement pour une vision à l’échelle européenne.
@@ -18,5 +16,3 @@ Côté modélisation, le Gradient Boosting Regressor a donné les meilleurs rés
 -Explorer la fusion de datasets pour améliorer la représentativité.
 -Alléger le modèle en supprimant les variables les moins influentes, pour gagner en simplicité et en performance.
     """)
-
-st.subheader("Perspectives")
