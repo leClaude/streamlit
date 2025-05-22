@@ -7,19 +7,16 @@ st.title("Conclusion")
 st.subheader("Conclusion")
 
 st.markdown("""
-    L’objectif de notre projet était d’identifier les facteurs influençant les émissions de CO2 des
-    véhicules en utilisant différents modèles de prédiction sur deux jeux de données: un issu de
-    l’ADEME et l’autre issu de l’Agence Européenne de l’Environnement. Chacun offrait des
-    caractéristiques propres tant en termes de variables disponibles que de qualité des
-    données. Ils montraient toutefois une certaine complémentarité qui nous a poussé à réaliser
-    notre analyse sur les deux jeux de données en parallèle.
-    Parmi les modèles testés, le Gradient Boosting Regressor offre les meilleures performances
-    globales avec un score allant jusqu’à 0.965 sur le jeu de données de l’ADEME et 0.925 sur
-    le jeu de l’Agence Européenne. Le Random Forest Regressor a également montré de très
-    bonnes performances avec des temps de calcul moins longs.
-    L’analyse de l’importance des variables a montré que pour les deux jeux de données se sont
-    la masse, la puissance, la cylindrée ou encore le type de carburant des véhicules qui
-    prédominent.
+    Notre objectif était d’identifier les principaux facteurs influençant les émissions de CO₂ des véhicules, à l’aide de modèles de machine learning appliqués à deux jeux de données : celui de l’ADEME pour le marché français, et celui de l’Agence Européenne de l’Environnement pour une vision à l’échelle européenne.
+Côté modélisation, le Gradient Boosting Regressor a donné les meilleurs résultats, avec un score R² allant jusqu’à 0.965 sur les données ADEME et 0.925 sur le dataset européen avec des variables clés comme la masse, la puissance, la cylindrée et le type de carburant.
+#Limites
+-Fort déséquilibre du dataset : >80 % de minibus.
+-Surreprésentation de certains constructeurs.
+-Difficulté à généraliser les résultats à l’ensemble du parc automobile
+#Pistes à explorer
+-Rééquilibrer ou enrichir le dataset ADEME avec des véhicules plus variés.
+-Explorer la fusion de datasets pour améliorer la représentativité.
+-Alléger le modèle en supprimant les variables les moins influentes, pour gagner en simplicité et en performance.
     """)
 
 st.subheader("Perspectives")
