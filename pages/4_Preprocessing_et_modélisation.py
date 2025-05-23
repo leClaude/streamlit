@@ -21,7 +21,7 @@ import openpyxl
 st.title("Preprocessing et modélisation")
 
 
-st.image("data/mod_1.JPG",use_container_width=True, caption="preprocessing")
+st.image("data/mod_1.JPG",use_container_width=True, caption=None)
 
 @st.cache_data
 def load_data():
@@ -59,9 +59,9 @@ ademe_2014 = ademe_2014.replace({'EE' : 'essence / électrique (rechargeable)', 
 'H2' : 'hydrogène'})
 
 
-st.image("data/mod_2.JPG",use_container_width=True, caption="modelisation")
+st.image("data/mod_2.JPG",use_container_width=True, caption=None)
 
-st.image("data/mod_3.JPG",use_container_width=True, caption="modelisation")
+st.image("data/mod_3.JPG",use_container_width=True, caption=None)
 
 target = ademe_2014['co2']
 
